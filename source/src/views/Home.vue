@@ -14,12 +14,13 @@
       </b-row>
 
     </b-container>
-          <div>
-            <banner title="This is banner dear" img="https://picsum.photos/1920/700/?image=71"></banner>
-          </div>
      <b-container>
       <b-row>
         <b-col>
+          <div>
+            <banner title="This is banner dear" img="https://picsum.photos/1920/700/?image=71"></banner>
+          </div>
+    
           <h5 style="text-align:center" class="mt-2 pt-2 theme-color">Just for You</h5>
           <div class="product-panel">
             <div class="product-panel-insider">
@@ -31,15 +32,17 @@
               </b-button>
             </div>
           </div>
+
+           <div>
+            <banner title="This is banner two dear" img="https://picsum.photos/1024/700/?image=77"></banner>
+          </div>
         </b-col>
       </b-row>
 
       
      </b-container>
 
-          <div>
-            <banner title="This is banner two dear" img="https://picsum.photos/1024/700/?image=77"></banner>
-          </div>
+         
   
 
 

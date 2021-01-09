@@ -1,14 +1,15 @@
 <template>
-  <div>
+<div>
+
     <b-carousel
       id="carousel-1"
       v-model="slide"
-      :interval="4000"
+      :interval="3000"
       controls
       indicators
       background="#ababab"
       img-width="1024"
-      img-height="400"
+      img-height="300"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
@@ -20,7 +21,7 @@
           <img
             class="d-block w-100"
             width="1024"
-            height="500"
+            height="300"
             src="https://image.freepik.com/free-photo/package-boxes-cart-with-laptop-computer-online-shopping-concept_38716-130.jpg"> 
         </template>
            <div class="slider-overlap-caption" alt="image slot">
@@ -38,7 +39,7 @@
           <img
             class="d-block w-100"
             width="1024"
-            height="500"
+            height="300"
             src="https://i.ytimg.com/vi/tDvjQp1BaWA/maxresdefault.jpg"
             alt="image slot"
           />
@@ -58,7 +59,7 @@
           <img
             class="d-block w-100"
             width="1024"
-            height="500"
+            height="300"
             src="https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/publications/food-beverage-nutrition/foodnavigator-asia.com/article/2018/07/02/five-key-features-that-will-shape-the-online-retail-store-of-the-future/8266733-1-eng-GB/Five-key-features-that-will-shape-the-online-retail-store-of-the-future.jpg"
             alt="image slot"
           />
@@ -79,7 +80,7 @@
           <img
             class="d-block w-100"
             width="1024"
-            height="500"
+            height="300"
             src="https://assets.weforum.org/article/image/large_zwF2Vx9yuS2oq_csLEPiFUsSRLQ9c2LRNTdIhGDEBJU.jpg"
             alt="image slot"
           />
@@ -99,7 +100,7 @@
           <img
             class="d-block w-100"
             width="1024"
-            height="500"
+            height="300"
             src="https://li0.rightinthebox.com/images/dfp/202011/c1180_39361_s11301320pcus1_en.gif?89"
             alt="image slot"
           />
@@ -118,7 +119,12 @@
       Slide #: {{ slide }}<br>
       Sliding: {{ sliding }}
     </p>-->
+
+  
+
   </div>
+
+
 </template>
 
 <script>
@@ -147,7 +153,8 @@ export default {
 .carousel-caption {
   top: 30%;
   bottom: unset !important;
-  background: #3a3d372e;
+
+  background: #00000098;
   box-shadow: 1px 0px 6px -1px #eee6;
 }
 .greenBtn {
