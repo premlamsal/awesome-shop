@@ -3,7 +3,7 @@
     <div class="product-card" v-for="product in products" :key="product.id">
       <div class="product-image-outer-wrapper">
         <div class="product-image-frame">
-          <img :src="product.img" :alt="product.name" />
+          <img :src="product.image[0]" :alt="product.name" />
         </div>
       </div>
       <h6 class="product-title">{{product.name}}</h6>

@@ -13,7 +13,7 @@
           <div class="product-card">
             <div class="product-image-outer-wrapper">
               <div class="product-image-frame">
-                <img :src="product.img" :alt="product.name" />
+                <img :src="product.image[0]" :alt="product.name" />
               </div>
             </div>
             <h6>{{product.name}}</h6>

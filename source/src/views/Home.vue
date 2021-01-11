@@ -90,7 +90,7 @@ export default {
       let url_link = url || "https://eshop.test/api/products";
       this.$http.get(url_link)
         .then(response => {
-          this.products = response.data.data;
+          this.products = response.data;
         })
         .catch(error => {
           console.log(error);
