@@ -15,7 +15,7 @@ const routes = [
     },
   },
   {
-    path: '/product/:productName',
+    path: '/product/:slug',
     name: "Product",
     component: () => import("../views/ProductDetail.vue"),
      meta: {
@@ -57,7 +57,8 @@ const routes = [
     name: "Register",
     component: () => import("../views/Register.vue"),
   },
-   {
+   
+  {
      path: "/customer/profile",
     name: "CustomerProfile",
     component: () => import("../views/CustomerProfile.vue"),
@@ -65,6 +66,15 @@ const routes = [
       requiresAuth: true,
     },
   },
+
+    
+  {
+    path: "/category/:slug",
+   name: "Category",
+   component: () => import("../views/Category.vue"),
+  },
+
+
 ];
 
 const router = new VueRouter({

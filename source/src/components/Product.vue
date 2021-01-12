@@ -38,9 +38,9 @@ export default {
   
   methods: {
   
-    productDetail(productName){
+    productDetail(slug){
       // //add this for redundant error navigation ----  catch(() => {})
-      this.$router.push({ name: 'Product', params: { productName: productName}})
+      this.$router.push({ name: 'Product', params: { slug: slug}})
       //  this.$router.push({ 
 
       //   path: 'product',

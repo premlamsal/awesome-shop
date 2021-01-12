@@ -17,7 +17,13 @@
               </div>
             </div>
             <h6>{{product.name}}</h6>
-            <p class="product-price">$ {{product.price}}</p>
+            <div v-if="product.discount!=0">
+              <p class="product-price"><s>$ {{product.price}}</s></p>
+              <p class="product-offer-price" style="color:red">$ {{product.price - product.discount}}</p>
+              </div>
+              <div v-else>
+              <p class="product-price" style="color:red">$ {{product.price}}</p>
+            </div>
             <!-- <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum.</p> -->
             <p style="text-align:center">
               <b-button @click="addToCart(product.id,product.name,product.price,product.image[0])">
@@ -59,7 +65,6 @@ export default {
       };
 
       // this.$store.commit('pushCart', payload);
-
       // // or direct send payload and its key like below
       //   this.$store.commit({
       //     type: 'pushCart',

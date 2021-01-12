@@ -36,7 +36,7 @@
             </h6>
             <h3 style="color:#7cb342" class="mt-2">Rs. {{product.price}}</h3>
             <div class="product-buttons mt-3">
-              <b-button @click="addToCart(product.id,product.name,product.price,product.img)" class="btn-cart">
+              <b-button @click="addToCart(product.id,product.name,product.price,product.image[0])" class="btn-cart">
                 <b-icon icon="cart"></b-icon>Add to Cart
               </b-button>
               <b-button class="btn-wishlist">
@@ -219,7 +219,7 @@ watch:{
   methods: {
     getIdFromUrl() {
       this.scrollToTop();//take page to top
-      this.product_slug = this.$route.params.productName;//get product slug from the url.
+      this.product_slug = this.$route.params.slug;//get product slug from the url.
       this.loadProduct(this.product_slug);  //load the product as per the slug
       this.relatedProducts();  //load other related project for the page. 
     },
