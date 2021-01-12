@@ -10,8 +10,8 @@
             </div>
             <div class="img-small-nav d-flex justify-content-center">
               <ul>
-                <li v-for="thumb in thumb" :key="thumb.id">
-                  <img :src="thumb.url" @click="clickToViewImage(thumb.url)" />
+                <li v-for="thumb in product.thumb" :key="thumb.id">
+                  <img :src="thumb" @click="clickToViewImage(thumb)" />
                 </li>
               </ul>
             </div>
@@ -34,12 +34,6 @@
             <h6>
               <a href="#" style="color:#7cb342">Gangotri Suppliers</a>
             </h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio.
-              Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non,
-              semper suscipit, posuere a, pede.
-            </p>
-
             <h3 style="color:#7cb342" class="mt-2">Rs. {{product.price}}</h3>
             <div class="product-buttons mt-3">
               <b-button @click="addToCart(product.id)" class="btn-cart">
@@ -74,38 +68,14 @@
             <b-tabs content-class="mt-3" align="center">
               <b-tab title="Description" active>
                 <h6>Product Information</h6>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis.
-                  Suspendisse urna viverra non, semper suscipit, posuere a, pede.
-                  Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci.
-                  Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus.
-                  Donec consectetuer ligula vulputate sem tristique cursus.
-                </p>
-                <ul>
-                  <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit.</li>
-                  <li>Vivamus finibus vel mauris ut vehicula.</li>
-                  <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>
-                </ul>
-                <p>
-                  Nullam malesuada erat ut turpis. Suspendisse urna viverra non,
-                  semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum.
-                  Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.
-                  Phasellus ultrices nulla quis nibh. Quisque a lectus.
-                  Donec consectetuer ligula vulputate sem tristique cursus.
-                </p>
+               {{product.description}}
               </b-tab>
               <b-tab title="Additional Information">
-                <p>I'm the second tab</p>
+                {{product.more_info}}
               </b-tab>
               <b-tab title="Shipping & returns">
                 <h6>Delivery & returns</h6>
-                <p>
-                  We deliver to over 100 countries around the world. For full details of the delivery options we offer,
-                  please view our Delivery information
-                  We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt.
-                  For full details of how to make a return, please view our Returns information
-                </p>
+                {{product.shipping_return_info}}
               </b-tab>
               <b-tab title="Product Reviews">
                 <b-row>
@@ -205,32 +175,13 @@ export default {
       product_slug:"",//to store product slug form the url
       products: [], //for loding more products content on product details page
   
-      thumb: [
-        {
-          id: "1",
-          url: "http://eshop.test/storage/nit/71944c23c7f17659d823cf3153021bb6.jpg"
-        },
-        {
-          id: "2",
-          url: "http://eshop.test/storage/nit/e3479e1a61873c1e2f29f7cb8ebcb9ff.jpg"
-        },
-        {
-          id: "3",
-          url: "http://eshop.test/storage/nit/niti large.jpg"
-        },
-        {
-          id: "4",
-          url: "http://eshop.test/storage/nit/niti-shah-7.jpg"
-        }
-       
-      ],
       render_product_block:true,
       
     };
   },
   created() {
     this.getIdFromUrl();
-    this.imageZoomed = this.thumb[0].url;
+    // this.imageZoomed = this.thumb[0].url;
 
     /* this.$watch(
     //   () => this.$route.params,
@@ -282,7 +233,11 @@ watch:{
         this.$Progress.start()
         this.$http.get("https://eshop.test/api/productDFS/"+product_slug)
         .then(response=>{
-            this.product = response.data.product;
+            this.product = response.data.data[0]
+            // console.log(response.data.data[0]);
+            
+            this.imageZoomed = this.product.image[0];
+
             this.$Progress.finish();
               
         }).catch(error=>{
@@ -297,7 +252,7 @@ watch:{
       let url_link = url || "https://eshop.test/api/relatedProducts/"+ this.product_slug;
       this.$http.get(url_link)
         .then(response => {
-          this.products = response.data.data;
+          this.products = response.data;
         })
         .catch(error => {
           console.log(error);
