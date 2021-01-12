@@ -47,7 +47,7 @@ Vue.use(VueProgressBar, progressBarOptions)
 
 //axios allow cross origin
 Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-Axios.defaults.headers.common['Accept']='json';
+Axios.defaults.headers.common['Accept']='application/json';
 Vue.prototype.$http=Axios;
 
 Vue.config.productionTip = false
