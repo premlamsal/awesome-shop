@@ -36,7 +36,7 @@
             </h6>
             <h3 style="color:#7cb342" class="mt-2">Rs. {{product.price}}</h3>
             <div class="product-buttons mt-3">
-              <b-button @click="addToCart(product.id)" class="btn-cart">
+              <b-button @click="addToCart(product.id,product.name,product.price,product.img)" class="btn-cart">
                 <b-icon icon="cart"></b-icon>Add to Cart
               </b-button>
               <b-button class="btn-wishlist">
@@ -222,6 +222,20 @@ watch:{
       this.product_slug = this.$route.params.productName;//get product slug from the url.
       this.loadProduct(this.product_slug);  //load the product as per the slug
       this.relatedProducts();  //load other related project for the page. 
+    },
+      addToCart(productId,name,price,img) {
+      let payload = { productId: productId, quantity: 1,name:name,price:price,img:img};
+      // this.$store.commit('pushCart', payload);
+
+      // // or direct send payload and its key like below
+      //   this.$store.commit({
+      //     type: 'pushCart',
+      //     productId:productId,
+      //     quantity: 1,
+      //     });
+
+      // instead using dispatch for actions
+      this.$store.dispatch("cart/addProductToCart", payload);
     },
     productDetailParent(value){
         this.loadProduct(value);

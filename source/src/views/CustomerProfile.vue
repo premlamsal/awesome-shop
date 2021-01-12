@@ -53,9 +53,6 @@ export default {
     })
   },
   methods: {
-    test(){
-      
-    },
     addToCart(productId) {
       let payload = { productId: productId, quantity: 1 };
       // this.$store.commit('pushCart', payload);

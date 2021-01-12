@@ -20,7 +20,7 @@
             <p class="product-price">$ {{product.price}}</p>
             <!-- <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum.</p> -->
             <p style="text-align:center">
-              <b-button @click="addToCart(product.id,product.name,product.price,product.img)">
+              <b-button @click="addToCart(product.id,product.name,product.price,product.image[0])">
                 <b-icon icon="cart" font-scale="1.5"></b-icon>
               </b-button>
               <b-button @click="productDetail(product.slug)">
@@ -86,7 +86,7 @@ export default {
   margin-bottom: 1em;
   /* padding: 0.5em; */
   background: #fff;
-  height: 25em;
+  /* height: 25em; */
 }
 .product-card:hover {
   box-shadow: 1px 5px 15px 0 rgba(124, 179, 66, 0.28);

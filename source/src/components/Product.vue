@@ -6,11 +6,19 @@
           <img :src="product.image[0]" :alt="product.name" />
         </div>
       </div>
+      
+     
       <h6 class="product-title">{{product.name}}</h6>
-      <p class="product-price">$ {{product.price}}</p>
+      <div v-if="product.discount!=0">
+       <p class="product-price"><s>$ {{product.price}}</s></p>
+       <p class="product-offer-price" style="color:red">$ {{product.price - product.discount}}</p>
+      </div>
+      <div v-else>
+      <p class="product-price" style="color:red">$ {{product.price}}</p>
+     </div>
       <!-- <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum.</p> -->
       <p style="text-align:center">
-        <b-button @click="addToCart(product.id,product.name,product.price,product.img)">
+        <b-button @click="addToCart(product.id,product.name,product.price,product.image[0])">
           <b-icon icon="cart" font-scale="1.5"></b-icon>
         </b-button>
         <b-button @click="productDetail(product.slug)">
@@ -78,7 +86,7 @@ export default {
   margin-bottom: 1em;
   /* padding: 0.5em; */
   background: #fff;
-  height: 25em;
+  /* height: 25em; */
 }
 .product-card:hover {
   box-shadow: 1px 5px 15px 0 rgba(124, 179, 66, 0.28);

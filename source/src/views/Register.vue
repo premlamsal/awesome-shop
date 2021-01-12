@@ -122,12 +122,7 @@ export default {
             this.error = error.response.data.message;
           }
 
-          this.$toast.open({
-            message: error.response.data.message,
-            type: "error",
-            position: "top"
-            // all other options may go here
-          });
+        
         });
     }
   }

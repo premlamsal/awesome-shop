@@ -82,6 +82,11 @@ export default {
         .then(() => {
           this.isLoading = false;
           this.$router.push("/");
+          
+           this.$toast.success("Welcome", {
+                timeout: 2000
+            });
+
         })
         .catch(error => {
           this.errors = [];
@@ -93,14 +98,11 @@ export default {
           } else if (error.response.status === 401) {
             this.error = error.response.data.message;
           }
-
-          this.$toast.open({
-            message: error.response.data.message,
-            type: "error",
-            position: "top"
-            // all other options may go here
-          });
+          this.$toast.error(error.response.data.message, {
+                timeout: 2000
+            });
         });
+
     }
   }
 };
