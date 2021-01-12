@@ -1,4 +1,9 @@
 import Axios from "axios";
+
+//axios allow cross origin
+// Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// Axios.defaults.headers.common['Accept']='json';
+
 const state = {
   token: localStorage.getItem("token") || "",
   user: {},
