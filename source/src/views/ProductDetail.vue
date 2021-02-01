@@ -34,7 +34,15 @@
             <h6>
               <a href="#" style="color:#7cb342">Gangotri Suppliers</a>
             </h6>
-            <h3 style="color:#7cb342" class="mt-2">Rs. {{product.price}}</h3>
+
+             <div v-if="product.discount!=0" class="mt-2">
+              <p class="product-price"><s>$ {{product.price}}</s></p>
+              <h3 class="product-offer-price" style="color:#7cb342">$ {{product.price - product.discount}}</h3>
+              </div>
+               <div v-else  class="mt-2">
+                <h3 style="color:#7cb342">Rs. {{product.price}}</h3>
+              </div>
+
             <div class="product-buttons mt-3">
               <b-button @click="addToCart(product.id,product.name,product.price,product.image[0])" class="btn-cart">
                 <b-icon icon="cart"></b-icon>Add to Cart

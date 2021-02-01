@@ -71,10 +71,16 @@ Vue.use(Toast, options);
 
 //end of vue toastification
 
-//axios allow cross origin
-Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-Axios.defaults.headers.common['Accept']='application/json';
+
+//axios config
+Axios.defaults.headers.common = {
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
+   "Access-Control-Allow-Origin" : '*',
+   "Content-Type": "application/json",
+   Accept: "application/json"
+ };
 Vue.prototype.$http=Axios;
+//axios config
 
 Vue.config.productionTip = false
 new Vue({

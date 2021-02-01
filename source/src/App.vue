@@ -39,8 +39,6 @@ export default {
     })
   },
   created() {
-    // axios.defaults.headers.common["Authorization"]="Bearer " + localStorage.getItem("app_token");
-    // axios.defaults.headers.common["Authorization"]=this.$store.getters.getToken;
   }
 };
 </script>

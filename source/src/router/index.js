@@ -10,15 +10,15 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-     meta: {
+    meta: {
       requiresAuth: false,
     },
   },
   {
-    path: '/product/:slug',
+    path: "/product/:slug",
     name: "Product",
     component: () => import("../views/ProductDetail.vue"),
-     meta: {
+    meta: {
       requiresAuth: false,
     },
   },
@@ -35,15 +35,15 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: () => import("../views/Cart.vue"),
-     meta: {
-      requiresAuth: true,
+    meta: {
+      requiresAuth: false,
     },
   },
   {
     path: "/checkout",
     name: "Checkout",
     component: () => import("../views/CheckOut.vue"),
-     meta: {
+    meta: {
       requiresAuth: true,
     },
   },
@@ -53,38 +53,51 @@ const routes = [
     component: () => import("../views/Login.vue"),
   },
   {
-     path: "/register",
+    path: "/register",
     name: "Register",
     component: () => import("../views/Register.vue"),
   },
-   
+
   {
-     path: "/customer/profile",
+    path: "/customer/profile",
     name: "CustomerProfile",
     component: () => import("../views/CustomerProfile.vue"),
-     meta: {
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/customer/transactions",
+    name: "Transactions",
+    component: () => import("../views/Transactions.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/customer/mybooks",
+    name: "MyBooks",
+    component: () => import("../views/MyBooks.vue"),
+    meta: {
       requiresAuth: true,
     },
   },
 
-    
   {
     path: "/category/:slug",
-   name: "Category",
-   component: () => import("../views/Category.vue"),
+    name: "Category",
+    component: () => import("../views/Category.vue"),
   },
-
-
 ];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes,
 });
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (store.getters['auth/getToken']) {
+    if (store.getters["auth/getToken"]) {
       next();
       return;
     }

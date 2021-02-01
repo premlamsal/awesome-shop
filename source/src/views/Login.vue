@@ -79,14 +79,14 @@ export default {
       this.isLoading = true;
       this.$store
         .dispatch("auth/login", this.user)
-        .then(() => {
+        .then((response) => {
           this.isLoading = false;
-          this.$router.push("/");
-          
+          this.$router.push("/customer/profile");
+          console.log(response);
+          this.$http.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
            this.$toast.success("Welcome", {
                 timeout: 2000
             });
-
         })
         .catch(error => {
           this.errors = [];
@@ -115,8 +115,14 @@ export default {
   margin: 0 auto;
   width: 25em;
   border: 1px solid #7cb342;
+  border-radius:10px;
 }
 .login h4 {
   text-align: center;
+}
+.error-block ul {
+  list-style:none;
+  padding:0px;
+  margin:5px;
 }
 </style>

@@ -9,16 +9,30 @@
           <b-form @submit.stop.prevent>
             <!-- <label for="feedback-user" class="mt-4">Name</label> -->
             <b-input
-              v-model="user.name"
-              id="feedback-name"
+              v-model="user.firstname"
               type="text"
-              placeholder="Enter name"
+              placeholder="Enter First Name"
               class="mt-4"
             ></b-input>
 
             <div class="error-block">
-              <span style="color: red" v-if="errors.name">
-                <ul v-for="error in errors.name" :key="error">
+              <span style="color: red" v-if="errors.firstname">
+                <ul v-for="error in errors.firstname" :key="error">
+                  <li>{{ error }}</li>
+                </ul>
+              </span>
+            </div>
+
+            <b-input
+              v-model="user.lastname"
+              type="text"
+              placeholder="Enter Last Name"
+              class="mt-4"
+            ></b-input>
+
+            <div class="error-block">
+              <span style="color: red" v-if="errors.lastname">
+                <ul v-for="error in errors.lastname" :key="error">
                   <li>{{ error }}</li>
                 </ul>
               </span>
@@ -28,7 +42,7 @@
               v-model="user.email"
               id="feedback-email"
               type="email"
-              placeholder="Enter email"
+              placeholder="Enter Email"
               class="mt-4"
             ></b-input>
 
@@ -45,7 +59,7 @@
               v-model="user.password"
               id="feedback-password"
               type="password"
-              placeholder="Enter password"
+              placeholder="Enter Password"
               class="mt-4"
             ></b-input>
             <div class="error-block">
@@ -57,15 +71,21 @@
             </div>
             <br />
             <label for="error" class="mt-4" style="color: red" v-if="error">
-              {{
-              error
-              }}
+              {{ error }}
             </label>
-            <b-button variant="success" class="mt-2 mb-2" @click="register" v-if="showRegisterBtn" style="width:100%">
+            <b-button
+              variant="success"
+              class="mt-2 mb-2"
+              @click="register"
+              v-if="showRegisterBtn"
+              style="width:100%"
+            >
               <b-spinner b-spinner small v-if="isLoading"></b-spinner>Register
             </b-button>
-          <br/>
-              <router-link to="/login">Already registered? Click here</router-link>
+            <br />
+            <router-link to="/login"
+              >Already registered? Click here</router-link
+            >
           </b-form>
         </div>
       </b-col>
@@ -81,13 +101,14 @@ export default {
   data() {
     return {
       user: {
-        name: "",
+        firstname: "",
+        lastname: "",
         email: "",
-        password: ""
+        password: "",
       },
       error: "",
       errors: [],
-      isLoading: false
+      isLoading: false,
     };
   },
   computed: {
@@ -95,23 +116,30 @@ export default {
       if (
         this.user.email != "" &&
         this.user.password != "" &&
-        this.user.name != ""
+        this.user.firstname != "" &&
+        this.user.lastname != ""
       ) {
         return true;
       }
       return false;
-    }
+    },
   },
   methods: {
     register() {
       this.isLoading = true;
       this.$store
         .dispatch("auth/register", this.user)
-        .then(() => {
+        .then((response) => {
           this.isLoading = false;
-          this.$router.push("/");
+          this.$router.push("/customer/profile");
+          this.$http.defaults.headers.common = {
+            Authorization: `Bearer ${response.data.access_token}`,
+          };
+          this.$toast.success("Welcome! Thanks for registering", {
+            timeout: 2000,
+          });
         })
-        .catch(error => {
+        .catch((error) => {
           this.errors = [];
           this.error = "";
           this.isLoading = false;
@@ -121,11 +149,9 @@ export default {
           } else if (error.response.status === 401) {
             this.error = error.response.data.message;
           }
-
-        
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -136,9 +162,14 @@ export default {
   margin: 0 auto;
   width: 25em;
   border: 1px solid #7cb342;
+  border-radius: 10px;
 }
 .register h4 {
   text-align: center;
 }
+.error-block ul {
+  list-style: none;
+  padding: 0px;
+  margin: 5px;
+}
 </style>
-

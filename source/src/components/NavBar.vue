@@ -54,18 +54,32 @@
 
               <b-dropdown-item>
                 <router-link to="/customer/profile" class="navbar-item">
-                  <b-icon icon="person-circle"></b-icon>Profile
+                  <b-icon icon="person-circle"></b-icon> Profile
                 </router-link>
               </b-dropdown-item>
+
+               <b-dropdown-item>
+                <router-link to="/customer/transactions" class="navbar-item">
+                  <b-icon icon="arrow-left-right"></b-icon> Transactions
+                </router-link>
+              </b-dropdown-item>
+
+               <b-dropdown-item>
+                <router-link to="/customer/mybooks" class="navbar-item">
+                  <b-icon icon="collection"></b-icon> My Books
+                </router-link>
+              </b-dropdown-item>
+
+
               <b-dropdown-item @click="logout">
-                <b-icon icon="box-arrow-right"></b-icon>Log Out
+                <b-icon icon="box-arrow-right"></b-icon> Log Out
               </b-dropdown-item>
             </b-dropdown>
 
             <div class="login-register" v-else>
               <b-nav-item href="#">
                 <router-link to="/login" class="navbar-item">
-                  <b-icon icon="people">Login</b-icon>
+                  <b-icon icon="people"> Login</b-icon>
                 </router-link>
               </b-nav-item>
             </div>
@@ -116,6 +130,7 @@ export default {
     logout() {
       this.$store.dispatch("auth/logout").then(() => {
         this.$router.push("/login");
+        this.$http.defaults.headers.common = {'Authorization': ``}
       });
     }
   }
@@ -133,7 +148,8 @@ ul {
 }
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0;
+  width:100%;
 }
 a {
   color: #7cb342;

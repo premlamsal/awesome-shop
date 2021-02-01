@@ -2,7 +2,6 @@
   <b-container class="bg-white mt-3">
   <div class="category-full-panel">
     <b-row>
-      
       <b-col cols="10">
         <div class="category-header">
           <h4>Products for this Category</h4>

@@ -1,8 +1,7 @@
 import Axios from "axios";
 
-//axios allow cross origin
-// Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-// Axios.defaults.headers.common['Accept']='json';
+// axios allow cross origin
+Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 const state = {
   token: localStorage.getItem("token") || "",
@@ -31,6 +30,7 @@ const mutations = {
 const actions = {
   login(context, payload) {
     return new Promise((resolve, reject) => {
+      Axios.defaults.headers.common['Accept']='application/json';
       Axios.post(`https://eshop.test/api/login`, payload)
         .then((response) => {
           const token = response.data.access_token;
@@ -39,7 +39,7 @@ const actions = {
           context.commit("setUser", user);
           localStorage.setItem("token", token);
           // Add the following line:
-          Axios.defaults.headers.common["Authorization"] = token;
+          // Axios.defaults.headers.common["Authorization"] = token;
           resolve(response);
         })
         .catch((error) => {
@@ -50,6 +50,7 @@ const actions = {
   }, //end of login
   register(context,payload){
     return new Promise((resolve, reject) => {
+      Axios.defaults.headers.common['Accept']='application/json';
       Axios.post(`https://eshop.test/api/register`, payload)
         .then((response) => {
           const token = response.data.access_token;
@@ -58,7 +59,7 @@ const actions = {
           context.commit("setUser", user);
           localStorage.setItem("token", token);
           // Add the following line:
-          Axios.defaults.headers.common["Authorization"] = token;
+          // Axios.defaults.headers.common["Authorization"] = token;
           resolve(response);
         })
         .catch((error) => {
