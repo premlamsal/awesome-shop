@@ -42,7 +42,7 @@
           }}
         </label>
         <b-button variant="success" class="mt-2 mb-2" @click="login" v-if="showLoginBtn" style="width:100%">
-          <b-spinner b-spinner small v-if="isLoading"></b-spinner>Login
+          <b-spinner b-spinner small v-if="isLoading"></b-spinner> Login
         </b-button>
           <br/>
         <router-link to="/register">Not registered at? Click here</router-link>
@@ -82,7 +82,6 @@ export default {
         .then((response) => {
           this.isLoading = false;
           this.$router.push("/customer/profile");
-          console.log(response);
           this.$http.defaults.headers.common = {'Authorization': `Bearer ${response.data.access_token}`}
            this.$toast.success("Welcome", {
                 timeout: 2000

@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content mt-2">
     <b-container>
       <b-row>
         <b-col>
@@ -11,19 +11,25 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Date</th>
+                   <th scope="col">Transaction ID</th>
+                    <th scope="col">Date- initiated</th>
                     <th scope="col">Details</th>
                     <th scope="col">Amount</th>
+                    <th scope="col">Status</th>
+
                   </tr>
                 </thead>
                 <tbody>
+
                   <tr
                     v-for="transaction in user.transactions"
                     v-bind:key="transaction.id"
                   >
-                    <th scope="row">{{ new Date(transaction.created_at) }}</th>
+                    <td>{{transaction.custom_transaction_id}}</td>
+                    <td scope="row">{{ new Date(transaction.created_at) }}</td>
                     <td>{{ transaction.action }} #{{ transaction.ref_id }}</td>
                     <td>Rs. {{ transaction.amount }}</td>
+                    <td>{{transaction.status}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -34,9 +40,13 @@
                 id="show-btn"
                 @click="$bvModal.show('bv-modal-withdraw')"
                 class="btn btn-warning"
-                v-if="user.balance>0">WithDraw</b-button
+                v-if="user.balance>0 && canWithdraw">WithDraw</b-button
               >
-
+              <div class="someMessages" v-if="!canWithdraw">
+                <p>{{messages}}</p>
+              </div>
+            </div>
+          </div>
               <b-modal
                 id="bv-modal-withdraw"
                 hide-footer
@@ -92,8 +102,6 @@
                   >Request for WithDraw</b-button
                 >
               </b-modal>
-            </div>
-          </div>
         </b-col>
       </b-row>
     </b-container>
@@ -114,10 +122,13 @@ export default {
         method: "",
         amount: "",
       },
+      messages:'',
+      canWithdraw:false,
     };
   },
   created() {
     this.getUserTransactions();
+    this.checkIfWithDrawRequested();
   },
   computed: {},
   methods: {
@@ -128,12 +139,29 @@ export default {
           this.user = response.data.data[0];
         })
         .catch((error) => {
-          console.log(error.data.data);
+          console.log(error.response.data);
         });
     },
+  checkIfWithDrawRequested(){
 
+    this.$http.get('https://eshop.test/api/checkIfWithDrawRequested')
+    .then((response)=>{
+      // console.log(response.data);
+      this.messages=response.data.msg;
+        if(response.data.data===1){
+          this.canWithdraw=false;
+        }
+        else{
+          this.canWithdraw=true;
+        }
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
+
+  },
     withDrawRequest(){
-      // $bvModal.hide('bv-modal-withdraw')
+      this.$bvModal.hide('bv-modal-withdraw')
       this.$http
       .post("https://eshop.test/api/withDrawRequest",this.withdraw)
       .then((response)=>{

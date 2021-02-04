@@ -122,8 +122,10 @@ router.beforeEach((to, from, next) => {
         next("/customer/profile");
         return;
       }
-
-
+      else{
+        next();
+        return;
+      }  
     }
 
   }
