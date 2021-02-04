@@ -6,6 +6,7 @@ Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 const state = {
   token: localStorage.getItem("token") || "",
   user: {},
+  isAuthenticated:false,
 };
 const getters = {
   getToken(state) {
@@ -14,6 +15,9 @@ const getters = {
   getUser(state) {
     return state.user;
   },
+  getIsAuthenticated(state){
+    return state.isAuthenticated;
+  }
 };
 const mutations = {
   setToken(state, token) {
@@ -25,6 +29,9 @@ const mutations = {
   setUser(state, payload) {
     state.user = payload.user;
   },
+  setIsAuthenticated(state,payload){
+    state.isAuthenticated=payload
+  }
 };
 
 const actions = {
@@ -37,6 +44,7 @@ const actions = {
           const user = response.data.user;
           context.commit("setToken", token);
           context.commit("setUser", user);
+          context.commit("setIsAuthenticated",true);
           localStorage.setItem("token", token);
           // Add the following line:
           // Axios.defaults.headers.common["Authorization"] = token;
@@ -57,6 +65,7 @@ const actions = {
           const user = response.data.user;
           context.commit("setToken", token);
           context.commit("setUser", user);
+          context.commit("setIsAuthenticated",true);
           localStorage.setItem("token", token);
           // Add the following line:
           // Axios.defaults.headers.common["Authorization"] = token;
@@ -67,6 +76,27 @@ const actions = {
           reject(error);
         });
     }); //end of promise
+  },
+  checkAuthToken(context){
+    return new Promise((resolve,reject)=>{
+    const token = context.getters.getToken; //accessing getter from action
+     Axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
+      Axios.defaults.headers.common['Accept']='application/json';
+      Axios.get('https://eshop.test/api/getUser')
+      .then((response)=>{
+        // console.log(response.data.data[0]);
+        const user = response.data.data[0]
+        context.commit("setUser", user);
+        context.commit("setIsAuthenticated",true);
+        resolve(response);
+      })
+      .catch((error)=>{
+        context.logout;//clear old token from localstorage and axios config
+        // console.log(error);
+        context.commit("setIsAuthenticated",false);
+        reject(error);
+      });
+    })
   },
   logout(context) {
     return new Promise((resolve) => {

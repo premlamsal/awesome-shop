@@ -95,16 +95,47 @@ const router = new VueRouter({
   routes,
 });
 
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some((record) => record.meta.requiresAuth)) {
+//     if (store.getters["auth/getToken"]) {
+
+//       next();
+//       return;
+//     }
+//     next("/login");
+//   } else {
+//     next();
+//   }
+// });
+
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (store.getters["auth/getToken"]) {
+  if (store.getters["auth/getToken"]) {
+
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
       next();
       return;
+
     }
-    next("/login");
-  } else {
-    next();
+    else{
+
+      if (to.name == "Login" ||(to.name === "Register")) {
+        next("/customer/profile");
+        return;
+      }
+
+
+    }
+
   }
+  else{
+    if (to.matched.some((record) => record.meta.requiresAuth)){
+      next("/login");
+      return;
+    }
+      next();
+      return;
+  }//end of auth/getToken
+
 });
 
 export default router;

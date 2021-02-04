@@ -34,7 +34,7 @@
                 id="show-btn"
                 @click="$bvModal.show('bv-modal-withdraw')"
                 class="btn btn-warning"
-                >WithDraw</b-button
+                v-if="user.balance>0">WithDraw</b-button
               >
 
               <b-modal

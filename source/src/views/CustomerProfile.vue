@@ -245,10 +245,8 @@ export default {
           this.user.lastname = user_data.lastname;
           this.user.balance = user_data.balance;
           this.user.email = user_data.email;
-
           if (user_data.details != null) {
             this.user.details=user_data.details;
-
           }
         })
         .catch((error) => {

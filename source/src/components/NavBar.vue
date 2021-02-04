@@ -1,6 +1,5 @@
 <template>
   <div class="nav-bar">
-  
     <div class="container">
       <b-navbar toggleable="md" type="light" variant="">
         <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
@@ -23,7 +22,11 @@
             </b-nav-item>
           </b-navbar-nav>-->
           <div class="search-bar">
-            <input type="text" class="form-control search-input" placeholder="Search products.." />
+            <input
+              type="text"
+              class="form-control search-input"
+              placeholder="Search products.."
+            />
             <button>
               <b-icon icon="search"></b-icon>
             </button>
@@ -33,9 +36,9 @@
           <b-navbar-nav class>
             <b-nav-item href="#">
               <router-link to="/cart" class="navbar-item" right>
-                <b-icon icon="cart-fill" v-if="totalItemsInCart>0"></b-icon>
+                <b-icon icon="cart-fill" v-if="totalItemsInCart > 0"></b-icon>
                 <b-icon icon="cart" v-else></b-icon>
-                <b-badge variant="warning">{{totalItemsInCart}}</b-badge>
+                <b-badge variant="warning">{{ totalItemsInCart }}</b-badge>
               </router-link>
             </b-nav-item>
 
@@ -58,18 +61,17 @@
                 </router-link>
               </b-dropdown-item>
 
-               <b-dropdown-item>
+              <b-dropdown-item>
                 <router-link to="/customer/transactions" class="navbar-item">
                   <b-icon icon="arrow-left-right"></b-icon> Transactions
                 </router-link>
               </b-dropdown-item>
 
-               <b-dropdown-item>
+              <b-dropdown-item>
                 <router-link to="/customer/mybooks" class="navbar-item">
                   <b-icon icon="collection"></b-icon> My Books
                 </router-link>
               </b-dropdown-item>
-
 
               <b-dropdown-item @click="logout">
                 <b-icon icon="box-arrow-right"></b-icon> Log Out
@@ -91,7 +93,7 @@
     <Menu v-bind:menus="menuslist" />
 
     <!-- set progressbar -->
-        <vue-progress-bar></vue-progress-bar>
+    <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
@@ -103,37 +105,47 @@ import { mapGetters } from "vuex";
 export default {
   name: "NavBar",
   components: {
-    Menu
+    Menu,
   },
   data() {
     return {
-      menuslist: []
+      menuslist: [],
+      isLoggedIn: false,
     };
   },
   computed: {
     ...mapGetters({
       totalItemsInCart: "cart/getTotalItemsInCart",
-      isLoggedIn: "auth/getToken"
-    })
+      hasToken: "auth/getToken",
+    }),
   },
   created() {
-    this.$http
-      .get("https://eshop.test/api/getmenu")
-      .then(response => {
-        this.menuslist = response.data.data;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.getMenu();
+    this.checkIsLogIn();
   },
   methods: {
+    getMenu() {
+      this.$http
+        .get("https://eshop.test/api/getmenu")
+        .then((response) => {
+          this.menuslist = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    checkIsLogIn() {
+      this.$store.dispatch("auth/checkAuthToken").then(() => {
+        this.isLoggedIn = true;
+      });
+    },
     logout() {
       this.$store.dispatch("auth/logout").then(() => {
         this.$router.push("/login");
-        this.$http.defaults.headers.common = {'Authorization': ``}
+        this.$http.defaults.headers.common = { Authorization: `` };
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -149,7 +161,7 @@ ul {
 li {
   display: inline-block;
   margin: 0;
-  width:100%;
+  width: 100%;
 }
 a {
   color: #7cb342;
@@ -168,7 +180,7 @@ input.search-input {
   box-shadow: 0px 2px 4px -2px #7cb342;
   padding-left: 8px;
 }
-.nav-bar{
+.nav-bar {
   background: #fff;
 }
 .search-bar {
