@@ -121,9 +121,15 @@ export default {
   },
   created() {
     this.getMenu();
-    this.checkIsLogIn();
+    // this.checkIsLogIn();
+  },
+  watch:{
+    $route:function(){
+      this.checkIsLogIn();
+    },
   },
   methods: {
+    
     getMenu() {
       this.$http
         .get("https://eshop.test/api/getmenu")
@@ -137,13 +143,23 @@ export default {
     checkIsLogIn() {
       this.$store.dispatch("auth/checkAuthToken").then(() => {
         this.isLoggedIn = true;
-      });
+      })
+      .catch((error)=>{
+        // console.log(error.response.data);
+        this.$toast.error(error.response.data.message, {
+                timeout: 2000
+            });
+      })
     },
     logout() {
       this.$store.dispatch("auth/logout").then(() => {
         this.$router.push("/login");
         this.$http.defaults.headers.common = { Authorization: `` };
-      });
+        this.isLoggedIn=false;
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
     },
   },
 };
