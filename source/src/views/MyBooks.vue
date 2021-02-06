@@ -220,10 +220,8 @@ export default {
         unit:'',
         quantity:'',
       },
-      
       book_title:'Upload Book',
       book_action:'add',//add or edit
-
       errors:[],
       categories:{},
       units:{},
@@ -259,7 +257,9 @@ export default {
           this.products = response.data.data;
         })
         .catch((error) => {
-          console.log(error);
+          this.$toast.error(error.response.data.message, {
+                timeout: 4000
+            });
         });
     },
     
@@ -282,11 +282,12 @@ export default {
                   this.book.quantity=product.quantity;
                   this.book.id=product.id;
                   this.$bvModal.show('bv-modal-addbook');
-                  console.log(product);
             })
-            .catch((response)=>{
+            .catch((error)=>{
               this.clearBook();
-              console.log(response);
+              this.$toast.error(error.response.data.message, {
+                timeout: 4000
+            });
             })
       }
     },
@@ -306,7 +307,9 @@ export default {
         // console.log(this.categories);
       })
       .catch((error)=>{
-        console.log(error);
+        this.$toast.error(error.response.data.message, {
+                timeout: 4000
+            });
       })
     },
 
@@ -320,7 +323,9 @@ export default {
         // console.log(this.categories);
       })
       .catch((error)=>{
-        console.log(error);
+        this.$toast.error(error.response.data.message, {
+                timeout: 4000
+            });
       })
     },
    
@@ -364,7 +369,8 @@ export default {
            this.$toast.error(error.response.data.message, {
                 timeout: 4000
             });
-          this.erros=error.response.data;
+          this.errors=error.response.data.errors;
+````
           this.clearBook();
         });
 
@@ -413,7 +419,7 @@ export default {
            this.$toast.error(error.response.data.message, {
                 timeout: 4000
             });
-          this.erros=error.response.data;
+          this.errors=error.response.data.errors;
           this.clearBook();
         });
 
@@ -431,5 +437,8 @@ export default {
     height: 100px;
     border-radius: 64px;
     margin:2px;
+}
+.errorText{
+  color:red;
 }
 </style>
