@@ -88,6 +88,11 @@ const routes = [
     name: "Category",
     component: () => import("../views/Category.vue"),
   },
+  {
+    path: "/search/:key",
+    name: "Search",
+    component: () => import("../views/Search.vue"),
+  },
 ];
 
 const router = new VueRouter({

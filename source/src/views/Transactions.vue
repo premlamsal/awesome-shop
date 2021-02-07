@@ -133,16 +133,23 @@ export default {
   computed: {},
   methods: {
     getUserTransactions() {
+      this.$Progress.start();
+
       this.$http
         .get("https://eshop.test/api/getUserTransaction")
         .then((response) => {
           this.user = response.data.data[0];
+          this.$Progress.finish();
+
         })
         .catch((error) => {
           console.log(error.response.data);
+      this.$Progress.finish();
+
         });
     },
   checkIfWithDrawRequested(){
+      this.$Progress.start();
 
     this.$http.get('https://eshop.test/api/checkIfWithDrawRequested')
     .then((response)=>{
@@ -154,21 +161,31 @@ export default {
         else{
           this.canWithdraw=true;
         }
+      this.$Progress.finish();
+
     })
     .catch((error)=>{
       console.log(error);
+      this.$Progress.fail();
+
     })
 
   },
     withDrawRequest(){
+      this.$Progress.start();
+
       this.$bvModal.hide('bv-modal-withdraw')
       this.$http
       .post("https://eshop.test/api/withDrawRequest",this.withdraw)
       .then((response)=>{
         console.log(response);
+      this.$Progress.finish();
+
       })
       .catch((error)=>{
         console.log(error)
+      this.$Progress.fail();
+
       })
     }
   },

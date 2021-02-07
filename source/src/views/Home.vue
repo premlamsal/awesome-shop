@@ -12,7 +12,7 @@
       <b-row>
         <b-col>
           <h5 style="text-align:center" class="mt-2 pt-2 theme-color">
-            Highlights
+            Popular
           </h5>
           <div class="col">
             <div class="product-container">
@@ -24,15 +24,24 @@
 
       <b-row>
         <b-col>
-          <div class="mt-4">
-            <banner
-              title="This is banner dear"
-              img="https://picsum.photos/1920/700/?image=71"
-            ></banner>
+          <div class="category-card-container">
+              <h5>Start with Categories</h5>
+            <div class="category-card">
+              <ul v-for="category in categories" v-bind:key="category.id">
+                <li>
+                  <a href="javascript:" @click="showByCat(category.slug)">{{
+                    category.name
+                  }}</a>
+                </li>
+              </ul>
+            </div>
           </div>
-
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
           <h5 style="text-align:center" class="mt-2 pt-2 theme-color">
-            Just for You
+            More Books
           </h5>
           <div class="product-panel">
             <div class="product-panel-insider">
@@ -45,12 +54,7 @@
             </div>
           </div>
 
-          <div>
-            <banner
-              title="This is banner two dear"
-              img="https://picsum.photos/1024/700/?image=77"
-            ></banner>
-          </div>
+          <div></div>
         </b-col>
       </b-row>
     </b-container>
@@ -61,7 +65,6 @@ import ProductSlider from "../components/ProductSlider";
 import Product from "../components/Product";
 import { mapGetters } from "vuex";
 import Slider from "../components/Slider";
-import Banner from "../components/Banner";
 
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
@@ -71,12 +74,12 @@ export default {
   components: {
     Slider,
     ProductSlider,
-    Banner,
     Product,
   },
   data() {
     return {
       products: [],
+      categories: [],
     };
   },
   computed: {
@@ -89,10 +92,28 @@ export default {
     }),
   },
   created() {
+    this.loadCategories();
     this.loadProducts();
   },
   mounted() {},
   methods: {
+    showByCat(slug){
+      this.$router.push({ name: 'Category', params: { slug: slug}})
+    },
+    loadCategories() {
+      //load random 5 Categories
+
+      this.$http
+        .get("https://eshop.test/api/categories/random")
+        .then((response) => {
+          this.categories = response.data.data;
+        })
+        .catch((error) => {
+          this.$toast.error(error.response.data.message, {
+            timeout: 4000,
+          });
+        });
+    },
     loadProducts(url) {
       this.$Progress.start();
       let url_link = url || "https://eshop.test/api/products";
@@ -165,5 +186,48 @@ export default {
 }
 .category-aside ul li ul.dropdown li {
   display: block;
+}
+.category-card {
+  
+  display: flex;
+  justify-content: center;
+}
+.category-card ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+.category-card ul li {
+  float: left;
+}
+.category-card ul li a {
+  margin: 1em;
+  padding: 2.5em;
+
+  background: #fff;
+  color: #83b759;
+
+  box-shadow: 1px 1px 0px 1px #d1dcc8;
+
+  border-radius: 56%;
+  font-size: large;
+  display: block;
+  text-decoration: none;
+  transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -webkit-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
+}
+.category-card ul li a:hover {
+  background: #83b759;
+  color: #fff;
+  box-shadow: 1px 3px 10px 4px #d1dcc4;
+}
+.category-card-container {
+margin: 4em 0em 2em 0em;
+}
+.category-card-container h5 {
+  color: #83b759;
+  text-align:center;
 }
 </style>

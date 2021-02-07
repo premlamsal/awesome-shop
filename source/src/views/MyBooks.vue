@@ -251,19 +251,27 @@ export default {
       this.$bvModal.show('bv-modal-addbook')
     },
     loadMyBooks() {
+      this.$Progress.start();
+
       this.$http
         .get("https://eshop.test/api/loadMyBooks")
         .then((response) => {
           this.products = response.data.data;
+      this.$Progress.finish();
+
         })
         .catch((error) => {
           this.$toast.error(error.response.data.message, {
                 timeout: 4000
             });
+      this.$Progress.fail();
+
         });
     },
     
     loadBookDetails(slug){
+      this.$Progress.start();
+
       this.book_action="edit";
       this.book_title="Change Book Information";
       if(this.book_action==="edit"){
@@ -282,12 +290,16 @@ export default {
                   this.book.quantity=product.quantity;
                   this.book.id=product.id;
                   this.$bvModal.show('bv-modal-addbook');
+      this.$Progress.finish();
+
             })
             .catch((error)=>{
               this.clearBook();
               this.$toast.error(error.response.data.message, {
                 timeout: 4000
             });
+      this.$Progress.fail();
+
             })
       }
     },
@@ -299,37 +311,50 @@ export default {
 
     },
     loadCategories(){
+      this.$Progress.start();
+
       this.$http
       .get("https://eshop.test/api/categories")
       .then((response)=>{
         // console.log(response.data);
         this.categories=response.data.data;
+      this.$Progress.finish();
         // console.log(this.categories);
       })
       .catch((error)=>{
         this.$toast.error(error.response.data.message, {
                 timeout: 4000
             });
+      this.$Progress.fail();
+
       })
     },
 
 
     loadUnits(){
+      this.$Progress.start();
+
       this.$http
       .get("https://eshop.test/api/units")
       .then((response)=>{
         // console.log(response.data);
         this.units=response.data.data;
         // console.log(this.categories);
+      this.$Progress.finish();
+
       })
       .catch((error)=>{
         this.$toast.error(error.response.data.message, {
                 timeout: 4000
             });
+      this.$Progress.fail();
+
       })
     },
    
     editBook(){
+      this.$Progress.start();
+
          this.book_action="Edit Book";
          this.book_action="edit";
          let formData = new FormData();
@@ -364,6 +389,8 @@ export default {
           this.clearBook();
           this.loadMyBooks();
           this.$bvModal.hide('bv-modal-addbook')
+      this.$Progress.finish();
+
         })
         .catch((error)=>{
            this.$toast.error(error.response.data.message, {
@@ -372,12 +399,16 @@ export default {
           this.errors=error.response.data.errors;
 ````
           this.clearBook();
+      this.$Progress.fail();
+
         });
 
 
       
     },
     uploadBook(){
+      this.$Progress.start();
+
       this.book_action="add";
       this.book_title="Upload Book"
       this.clearBook();
@@ -414,6 +445,8 @@ export default {
           this.$bvModal.hide('bv-modal-addbook')
           this.clearBook();
           this.loadMyBooks();
+      this.$Progress.finish();
+
         })
         .catch((error)=>{
            this.$toast.error(error.response.data.message, {
@@ -421,6 +454,8 @@ export default {
             });
           this.errors=error.response.data.errors;
           this.clearBook();
+      this.$Progress.fail();
+
         });
 
     },

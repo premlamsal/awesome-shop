@@ -26,8 +26,9 @@
               type="text"
               class="form-control search-input"
               placeholder="Search products.."
+              v-model="search_key"
             />
-            <button>
+            <button @click="makeSearch()">
               <b-icon icon="search"></b-icon>
             </button>
           </div>
@@ -111,6 +112,7 @@ export default {
     return {
       menuslist: [],
       isLoggedIn: false,
+      search_key:'',
     };
   },
   computed: {
@@ -129,7 +131,12 @@ export default {
     },
   },
   methods: {
-    
+    makeSearch(){
+      const search_key=this.search_key;
+      if(search_key!=''){
+       this.$router.push({ name: 'Search', params: { key: search_key}})
+      }
+    },
     getMenu() {
       this.$http
         .get("https://eshop.test/api/getmenu")

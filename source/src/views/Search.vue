@@ -1,11 +1,12 @@
 <template>
-  <div class="category-full-panel bg-white mt-2">
+  <div class="search-full-panel bg-white mt-2">
   <b-container>
   
     <b-row>
       <b-col cols="10">
-        <div class="category-header mt-4">
-          <h4>Products for this Category</h4>
+        <div class="search-header mt-4">
+        <h3>You've searched for {{search_key}}</h3>
+          <h4>We found this for you !</h4>
           <div class="product-panel mt-5">
             <div class="product-panel-insider">
               <product :products="products"></product>
@@ -33,7 +34,7 @@ export default {
 
   data() {
     return {
-      category_slug: "", //to store product slug form the url
+      search_key: "", //to store product slug form the url
       products: [], //for loding more products content on product details page
       render_product_block: true,
     };
@@ -58,14 +59,14 @@ export default {
   methods: {
     getIdFromUrl() {
       this.scrollToTop(); //take page to top
-      this.category_slug = this.$route.params.slug; //get category slug from the url.
-      this.loadProductsByCategory(); //load the product as per the slug
+      this.search_key = this.$route.params.key; //get search slug from the url.
+      this.loadProductsBySearch(); //load the product as per the slug
     },
-    loadProductsByCategory(url) {
+    loadProductsBySearch(url) {
       this.$Progress.start();
 
       let url_link =
-        url || "https://eshop.test/api/category/" + this.category_slug;
+        url || "https://eshop.test/api/search/" + this.search_key;
       this.$http
         .get(url_link)
         .then((response) => {
@@ -76,7 +77,7 @@ export default {
         .catch((error) => {
           console.log(error);
       this.$Progress.fail();
-        
+
         });
     },
 
@@ -88,10 +89,10 @@ export default {
 </script>
 
 <style scoped>
-.category-header {
+.search-header {
 text-align:center;
 }
-.category-full-panel{
+.search-full-panel{
     padding:10px;
 }
 </style>
