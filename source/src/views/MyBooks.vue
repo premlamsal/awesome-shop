@@ -191,6 +191,7 @@
                 <b-button class="mt-3" block @click="editBook" v-if="book_action==='edit'">Edit Book</b-button>
 
                 <b-button class="mt-3" block @click="uploadBook" v-if="book_action==='add'">Add Book</b-button>
+              
               </b-modal>
 
              
@@ -248,6 +249,8 @@ export default {
     },
     showModal(){
       this.clearBook();
+      this.book_action="add";
+      this.book_title="Upload a Book";
       this.$bvModal.show('bv-modal-addbook')
     },
     loadMyBooks() {
@@ -370,7 +373,7 @@ export default {
         formData.append("unit",this.book.unit);
         formData.append("name",this.book.name);
         formData.append("quantity",this.book.quantity);
-        formData.append("price",this.book.discount);
+        formData.append("price",this.book.price);
         formData.append("discount",this.book.discount);
         formData.append("description",this.book.description);
         formData.append("more_info",this.book.more_info);
@@ -402,19 +405,14 @@ export default {
       this.$Progress.fail();
 
         });
-
-
       
     },
     uploadBook(){
       this.$Progress.start();
-
       this.book_action="add";
       this.book_title="Upload Book"
-      this.clearBook();
       let formData = new FormData();
-
-        
+       
         formData.append("uploadedFiles",this.uploadedFiles);
 
         for( var i = 0; i < this.uploadedFiles.length; i++ ){
@@ -426,7 +424,7 @@ export default {
         formData.append("unit",this.book.unit);
         formData.append("name",this.book.name);
         formData.append("quantity",this.book.quantity);
-        formData.append("price",this.book.discount);
+        formData.append("price",this.book.price);
         formData.append("discount",this.book.discount);
         formData.append("description",this.book.description);
         formData.append("more_info",this.book.more_info);
