@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="self-product-container">
     <div class="product-card" v-for="product in products" :key="product.id">
       <div class="product-image-outer-wrapper">
         <div class="product-image-frame">
@@ -77,13 +77,16 @@ export default {
 };
 </script>
 <style scoped>
+.self-product-container{
+  display:flex;
+}
 .product-card {
   box-shadow: 1px 2px 5px 0 rgba(124, 179, 66, 0.28);
   max-width: 13em;
   text-align: center;
   display: inline-block;
-  margin: 6px;
-  margin-bottom: 1em;
+  margin-right: 1px;
+  margin-bottom:5px;
   /* padding: 0.5em; */
   background: #fff;
   /* height: 25em; */

@@ -87,7 +87,7 @@ export default {
   /* max-width: 16em; */
   text-align: center;
   display: inline-block;
-  margin: 8px;
+    margin-right: 1px;
   margin-bottom: 1em;
   /* padding: 0.5em; */
   background: #fff;
