@@ -91,26 +91,26 @@
       </b-navbar>
     </div>
 
-    <Menu v-bind:menus="menuslist" />
+    <Category v-bind:categories="categories_list" />
 
-    <!-- set progressbar -->
+   
     <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
 <script>
-import Menu from "./menu/Menu";
+import Category from "./category/Category";
 
 import { mapGetters } from "vuex";
 
 export default {
   name: "NavBar",
   components: {
-    Menu,
+    Category,
   },
   data() {
     return {
-      menuslist: [],
+      categories_list: [],
       isLoggedIn: false,
       search_key:'',
     };
@@ -122,7 +122,7 @@ export default {
     }),
   },
   created() {
-    this.getMenu();
+    this.getCategories();
     // this.checkIsLogIn();
   },
   watch:{
@@ -137,11 +137,14 @@ export default {
        this.$router.push({ name: 'Search', params: { key: search_key}})
       }
     },
-    getMenu() {
+    getCategories() {
+
+      // will get categories instead of menu
+
       this.$http
-        .get("https://eshop.test/api/getmenu")
+        .get("https://eshop.test/api/getCategoriesMenu")
         .then((response) => {
-          this.menuslist = response.data.data;
+          this.categories_list = response.data.data;
         })
         .catch((error) => {
           console.log(error);
