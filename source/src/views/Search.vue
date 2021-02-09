@@ -14,7 +14,7 @@
                 <b-button
                   variant="default"
                   class="loadmore-btn"
-                  @click="loadProductsByCategory(pagination.next_link)"
+                  @click="loadProductsBySearch(pagination.next_link)"
                   v-if="pagination.next_link != null"
                 >
                   <b-icon icon="arrow-down"></b-icon>Load More
