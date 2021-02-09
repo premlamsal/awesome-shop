@@ -39,6 +39,7 @@ export default {
 
       fromCatMenu(link){
         //will push
+        console.log(link)
 
       }
   }
