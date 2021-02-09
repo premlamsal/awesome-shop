@@ -30,11 +30,11 @@ export default {
 .custom-breadcrumb ul li {
   display: inline;
   font-size: 18px;
-  color: #7cb342;
+  color: #DC143C;
 }
 .custom-breadcrumb ul li + li:before {
   padding: 8px;
-  color: #7cb342;
+  color: #DC143C;
   content: "/\00a0";
 }
 .custom-breadcrumb ul li a {

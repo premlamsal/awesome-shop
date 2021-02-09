@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="nodrop-down" v-else>
-          <a v-bind:href="category.link">{{category.name}}</a>
+          <a href="javascript:" @click="fromCatMenu(category.slug)">{{category.name}}</a>
         </div>
       </div>
     </div>
@@ -37,9 +37,9 @@ export default {
   },
   methods:{
 
-      fromCatMenu(link){
+      fromCatMenu(slug){
         //will push
-        console.log(link)
+         this.$router.push({ name: "Category", params: { slug: slug } });
 
       }
   }
@@ -48,7 +48,7 @@ export default {
 <style>
 .navbar-custom {
     overflow: hidden;
-    background-color: #7cb342;
+    background-color: #DC143C;
     /* border-bottom: 1px solid #0080004f; */
     box-shadow: 1px 2px 11px -3px rgba(124, 179, 66, 0.68);
 }
@@ -115,7 +115,7 @@ export default {
   padding: 10px;
   /* background-color: #eee; */
   height: 250px;
-  color:#7cb342;
+  color:#DC143C;
 }
 
 .column-custom a {

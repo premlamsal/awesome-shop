@@ -247,7 +247,7 @@ export default {
   padding: 2.5em;
 
   background: #fff;
-  color: #83b759;
+  color: #DC143C;
 
   box-shadow: 1px 1px 0px 1px #d1dcc8;
 
@@ -261,7 +261,7 @@ export default {
   -o-transition: opacity 0.5s ease-out;
 }
 .category-card ul li a:hover {
-  background: #83b759;
+  background: #DC143C;
   color: #fff;
   box-shadow: 1px 3px 10px 4px #d1dcc4;
 }
@@ -269,7 +269,7 @@ export default {
   margin: 4em 0em 2em 0em;
 }
 .category-card-container h5 {
-  color: #83b759;
+  color: #DC143C;
   text-align: center;
 }
 </style>

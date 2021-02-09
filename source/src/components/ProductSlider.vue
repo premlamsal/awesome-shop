@@ -83,7 +83,7 @@ export default {
 </script>
 <style scoped>
 .product-card {
-  box-shadow: 1px 2px 5px 0 rgba(124, 179, 66, 0.28);
+  box-shadow: 1px 2px 5px 0 rgb(220,20,60,0.28);
   /* max-width: 16em; */
   text-align: center;
   display: inline-block;
@@ -94,7 +94,7 @@ export default {
   /* height: 25em; */
 }
 .product-card:hover {
-  box-shadow: 1px 5px 15px 0 rgba(124, 179, 66, 0.28);
+  box-shadow: 1px 5px 15px 0 rgb(220,20,60,0.28);
 }
 .product-card img {
   /* height: 14em; */
@@ -125,11 +125,11 @@ export default {
 }
 
 .product-card button {
-  border: 1px solid #7cb34261;
+  border: 1px solid #DC143C61;
   outline: 0;
   padding: 10px;
-  color: #7cb342;
-  background-color: #7cb34200;
+  color: #DC143C;
+  background-color: #DC143C00;
   text-align: center;
   cursor: pointer;
   width: 40%;
@@ -140,8 +140,8 @@ export default {
 .product-card button:hover {
   opacity: 0.9;
   color: white;
-  border: 1px solid #7cb34261;
-  background-color: #7cb342;
+  border: 1px solid #DC143C61;
+  background-color: #DC143C;
 }
 .product-image-outer-wrapper {
   display: inline-block;

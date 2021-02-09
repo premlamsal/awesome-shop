@@ -1,8 +1,8 @@
 <template>
-  <b-container class="mt-4 bg-white">
-    <b-row>
-      <b-col>
-        <div class="cart-container">
+        <div class="mt-2 cart-container bg-white">
+        <b-container>
+            <b-row>
+          <b-col>
           <div class="cart-inside">
             <h3 class="theme-color">
               <b-icon icon="bag-fill" v-if="totalItemsInCart>0"></b-icon>
@@ -76,10 +76,11 @@
               </b-row>
             </div>
           </div>
-        </div>
+  
       </b-col>
     </b-row>
   </b-container>
+        </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -146,14 +147,14 @@ span.grand-total-cart {
   font-size: 16px;
   display: block;
   color: white;
-  border: 1px solid #7cb34261;
-  background-color: #7cb342;
+  border: 1px solid #DC143C61;
+  background-color: #DC143C;
 }
 .btn-checkout:hover {
   opacity: 0.9;
-  color: #7cb342;
-  border: 1px solid #7cb34261;
-  background-color: #7cb34200;
+  color: #DC143C;
+  border: 1px solid #DC143C61;
+  background-color: #DC143C00;
 }
 .sidebox-cart {
   margin-top: 1em;

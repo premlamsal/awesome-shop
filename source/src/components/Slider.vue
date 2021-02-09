@@ -158,13 +158,13 @@ export default {
   box-shadow: 1px 0px 6px -1px #eee6;
 }
 .greenBtn {
-  background: #7cb342 !important;
+  background: #DC143C !important;
   color: white !important;
-  border: 1px solid #7cb342 !important;
+  border: 1px solid #DC143C !important;
 }
 .greenBtn:hover {
   background: none !important;
-  border: 1px solid #7cb342 !important;
+  border: 1px solid #DC143C !important;
   color: #fff !important;
 }
 .carousel-indicators > li {

@@ -161,7 +161,7 @@ export default {
   box-shadow: 0px 5px 10px -2px #aeb5b9ad;
   margin: 0 auto;
   width: 25em;
-  border: 1px solid #7cb342;
+  border: 1px solid #DC143C;
   border-radius: 10px;
 }
 .register h4 {

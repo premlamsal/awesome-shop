@@ -53,7 +53,7 @@
               no-caret
             >
               <template v-slot:button-content>
-                <b-icon icon="person" style="color:#7cb342"></b-icon>
+                <b-icon icon="person" style="color:#DC143C"></b-icon>
               </template>
 
               <b-dropdown-item>
@@ -190,12 +190,12 @@ li {
   width: 100%;
 }
 a {
-  color: #7cb342;
+  color: #DC143C;
   opacity: 0.8;
 }
 a:hover {
   opacity: 1;
-  color: #7cb342;
+  color: #DC143C;
 }
 input.search-input {
   width: 30em;
@@ -203,7 +203,7 @@ input.search-input {
   background: #eeeeee91;
   border: 0px;
   transition: ease-in-out, width 0.35s ease-in-out;
-  box-shadow: 0px 2px 4px -2px #7cb342;
+  box-shadow: 0px 2px 4px -2px #DC143C;
   padding-left: 8px;
 }
 .nav-bar {
@@ -217,14 +217,14 @@ input.search-input:focus {
   border: 0px !important;
   /* width: 50em; */
   background: #eee;
-  box-shadow: 0px 2px 4px -2px #7cb342 !important;
+  box-shadow: 0px 2px 4px -2px #DC143C !important;
 }
 .search-bar button {
   border: 0px;
   position: absolute;
   right: 2px;
   background: unset;
-  color: #7cb342;
+  color: #DC143C;
   top: 8px;
 }
 

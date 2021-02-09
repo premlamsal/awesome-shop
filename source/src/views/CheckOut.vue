@@ -1,5 +1,6 @@
 <template>
-  <b-container class="mt-4 bg-white">
+<div class="mt-2 bg-white">
+  <b-container>
     <b-row>
       <b-col>
         <div class="CheckOut">
@@ -68,6 +69,8 @@
       </b-col>
     </b-row>
   </b-container>
+  </div>
+
 </template>
 <script>
 import { mapGetters } from "vuex";

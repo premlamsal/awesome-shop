@@ -19,7 +19,7 @@
         </b-col>
         <b-col md="8">
           <div class="product-details-aside-panel">
-            <h3 style="color:#7cb342">{{product.name}}</h3>
+            <h3 style="color:#DC143C">{{product.name}}</h3>
             <div class="product-rating">
               <b-form-rating
                 style="padding:0px;"
@@ -32,15 +32,15 @@
               ></b-form-rating>
             </div>
             <h6>
-              <a href="#" style="color:#7cb342">Gangotri Suppliers</a>
+              <a href="#" style="color:#DC143C">Gangotri Suppliers</a>
             </h6>
 
              <div v-if="product.discount!=0" class="mt-2">
               <p class="product-price"><s>$ {{product.price}}</s></p>
-              <h3 class="product-offer-price" style="color:#7cb342">$ {{product.price - product.discount}}</h3>
+              <h3 class="product-offer-price" style="color:#DC143C">$ {{product.price - product.discount}}</h3>
               </div>
                <div v-else  class="mt-2">
-                <h3 style="color:#7cb342">Rs. {{product.price}}</h3>
+                <h3 style="color:#DC143C">Rs. {{product.price}}</h3>
               </div>
 
             <div class="product-buttons mt-3">
@@ -326,7 +326,7 @@ watch:{
 .related-product-panel h5 {
   padding-bottom: 5px;
   /* margin: 0.5em; */
-  color: #7cb342;
+  color: #DC143C;
 }
 .product-details-section-second h5 {
   border-bottom: 1px solid #eee;
@@ -339,24 +339,24 @@ watch:{
   justify-content: center;
 }
 .related-product-panel-insider button {
-  background: #7cb342;
+  background: #DC143C;
   color: white;
-  border: 1px solid #7cb342;
+  border: 1px solid #DC143C;
 }
 .related-product-panel button:hover {
   background: none;
-  border: 1px solid #7cb342;
-  color: #7cb342;
+  border: 1px solid #DC143C;
+  color: #DC143C;
 }
 .greenBtn {
-  background: #7cb342;
+  background: #DC143C;
   color: white;
-  border: 1px solid #7cb342;
+  border: 1px solid #DC143C;
 }
 .greenBtn:hover {
   background: none;
-  border: 1px solid #7cb342;
-  color: #7cb342;
+  border: 1px solid #DC143C;
+  color: #DC143C;
 }
 .img-small-nav {
   padding: 2px;
@@ -398,11 +398,11 @@ watch:{
   height: 425px;
 }
 .btn-cart {
-  border: 1px solid #7cb34261;
+  border: 1px solid #DC143C61;
   outline: 0;
   padding: 10px;
-  color: #7cb342;
-  background-color: #7cb34200;
+  color: #DC143C;
+  background-color: #DC143C00;
   text-align: center;
   cursor: pointer;
   width: 15em;
@@ -414,8 +414,8 @@ watch:{
 .btn-cart:hover {
   opacity: 0.9;
   color: white;
-  border: 1px solid #7cb34261;
-  background-color: #7cb342;
+  border: 1px solid #DC143C61;
+  background-color: #DC143C;
 }
 
 .btn-wishlist {

@@ -40,7 +40,7 @@ export default {
 <style>
 .navbar-custom {
     overflow: hidden;
-    background-color: #7cb342;
+    background-color: #DC143C;
     /* border-bottom: 1px solid #0080004f; */
     box-shadow: 1px 2px 11px -3px rgba(124, 179, 66, 0.68);
 }
@@ -107,7 +107,7 @@ export default {
   padding: 10px;
   /* background-color: #eee; */
   height: 250px;
-  color:#7cb342;
+  color:#DC143C;
 }
 
 .column-custom a {
