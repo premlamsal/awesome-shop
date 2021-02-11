@@ -474,7 +474,6 @@ export default {
             timeout: 4000,
           });
           this.errors = error.response.data.errors;
-          ````;
           this.clearBook();
           this.$Progress.fail();
         });

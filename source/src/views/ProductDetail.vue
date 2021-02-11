@@ -107,6 +107,8 @@
                 {{ product.shipping_return_info }}
               </b-tab>
               <b-tab title="Product Reviews">
+
+              <div class="insider-review-others" v-if="product.reviews!=null">
                 <b-row v-for="review in product.reviews" v-bind:key="review.id">
                   <b-col md="2">
                     <h6>{{review.title}}</h6>
@@ -132,6 +134,11 @@
 
                   </b-col>
                 </b-row>
+                </div>
+
+                <div class="inider-review-other-not-available" else>
+                 <h6>No reviews yet! Be the first to review this product.</h6>
+                </div>
                 <hr />
                 <b-row class="mt-3">
                   <b-col md="2">
@@ -159,7 +166,7 @@
                       class="mt-2"
                     ></b-form-textarea>
                     <b-button variant="warning" class="mt-2 greenBtn"
-                      >Submit</b-button
+                      @click="makeReview()">Submit</b-button
                     >
                   </b-col>
                 </b-row>
@@ -254,6 +261,37 @@ export default {
       this.product_slug = this.$route.params.slug; //get product slug from the url.
       this.loadProduct(this.product_slug); //load the product as per the slug
       this.relatedProducts(); //load other related project for the page.
+    },
+    makeReview(){
+      this.$Progress.start();
+      let formData = new FormData();
+      formData.append('title',this.my_review.title);
+      formData.append('rating',this.my_review.rating);
+      formData.append('body',this.my_review.body);
+      formData.append('product_id',this.product.id);
+      formData.append('_METHOD',"POST");
+
+      this.$http.post('https://eshop.test/api/review',formData)
+      .then((response)=>{
+
+           this.$toast.success(response.data.msg, {
+            timeout: 8000,
+          });
+        this.my_review.title=""
+        this.my_review.rating=""
+        this.my_review.body=""
+        this.$Progress.finish();
+      })
+      .catch((error)=>{
+
+        this.$toast.error(error.response.data.message, {
+            timeout: 4000,
+          });
+          this
+        this.$Progress.fail();
+      });
+
+
     },
     addToCart(productId, name, price, img) {
       let payload = {
