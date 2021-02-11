@@ -35,6 +35,13 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class>
+          
+          <b-nav-item href="#">
+              <router-link to="/customer/mybooks" class="navbar-item" right>
+                Upload
+              </router-link>
+            </b-nav-item>
+
             <b-nav-item href="#">
               <router-link to="/cart" class="navbar-item" right>
                 <b-icon icon="cart-fill" v-if="totalItemsInCart > 0"></b-icon>
@@ -42,7 +49,7 @@
                 <b-badge variant="warning">{{ totalItemsInCart }}</b-badge>
               </router-link>
             </b-nav-item>
-
+               
             <b-dropdown
               id="dropdown-right"
               right

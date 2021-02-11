@@ -19,13 +19,13 @@
         </b-col>
         <b-col md="8">
           <div class="product-details-aside-panel">
-            <h3 style="color:#DC143C">{{product.name}}</h3>
+            <h3 style="color:#DC143C">{{product.name }}</h3>
             <div class="product-rating">
               <b-form-rating
                 style="padding:0px;"
                 id="rating-inline"
                 inline
-                value="4"
+                :value="product.product_star"
                 no-border
                 color="orange"
                 readonly
@@ -35,16 +35,30 @@
               <a href="#" style="color:#DC143C">Gangotri Suppliers</a>
             </h6>
 
-             <div v-if="product.discount!=0" class="mt-2">
-              <p class="product-price"><s>$ {{product.price}}</s></p>
-              <h3 class="product-offer-price" style="color:#DC143C">$ {{product.price - product.discount}}</h3>
-              </div>
-               <div v-else  class="mt-2">
-                <h3 style="color:#DC143C">Rs. {{product.price}}</h3>
-              </div>
+            <div v-if="product.discount != 0" class="mt-2">
+              <p class="product-price">
+                <s>$ {{ product.price }}</s>
+              </p>
+              <h3 class="product-offer-price" style="color:#DC143C">
+                $ {{ product.price - product.discount }}
+              </h3>
+            </div>
+            <div v-else class="mt-2">
+              <h3 style="color:#DC143C">Rs. {{ product.price }}</h3>
+            </div>
 
             <div class="product-buttons mt-3">
-              <b-button @click="addToCart(product.id,product.name,product.price,product.image[0])" class="btn-cart">
+              <b-button
+                @click="
+                  addToCart(
+                    product.id,
+                    product.name,
+                    product.price,
+                    product.image[0]
+                  )
+                "
+                class="btn-cart"
+              >
                 <b-icon icon="cart"></b-icon>Add to Cart
               </b-button>
               <b-button class="btn-wishlist">
@@ -57,10 +71,17 @@
                   <b-col md="1">Highligts</b-col>
                   <b-col md="5">
                     <ul>
-                      <li>more then more</li>
-                      <li>more then one</li>
-                      <li>more then two</li>
+                      {{
+                        product.highligts
+                      }}
                     </ul>
+                  </b-col>
+                </b-row>
+
+                <b-row class="mt-3">
+                  <b-col>
+                    Location
+                    {{ product.location }}
                   </b-col>
                 </b-row>
               </div>
@@ -76,25 +97,25 @@
             <b-tabs content-class="mt-3" align="center">
               <b-tab title="Description" active>
                 <h6>Product Information</h6>
-               {{product.description}}
+                {{ product.description }}
               </b-tab>
               <b-tab title="Additional Information">
-                {{product.more_info}}
+                {{ product.more_info }}
               </b-tab>
               <b-tab title="Shipping & returns">
                 <h6>Delivery & returns</h6>
-                {{product.shipping_return_info}}
+                {{ product.shipping_return_info }}
               </b-tab>
               <b-tab title="Product Reviews">
-                <b-row>
+                <b-row v-for="review in product.reviews" v-bind:key="review.id">
                   <b-col md="2">
-                    <h6>Prem Lamsal</h6>
+                    <h6>{{review.title}}</h6>
                     <div class="product-rating">
                       <b-form-rating
                         style="padding:0px;"
                         id="rating-inline"
                         inline
-                        value="4"
+                        :value="review.rating"
                         no-border
                         color="orange"
                         readonly
@@ -102,11 +123,13 @@
                     </div>
                   </b-col>
                   <b-col md="6">
-                    <h6>Very good Product (1 month ago)</h6>
+
+                    <h6>{{review.title}} - {{review.created_at}}</h6>
                     <p>
-                      We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt.
-                      For full details
+                    {{review.body}}
                     </p>
+
+
                   </b-col>
                 </b-row>
                 <hr />
@@ -117,22 +140,27 @@
                         style="padding:0px;"
                         id="rating-inline"
                         inline
-                        value="1"
+                        :value="my_review.rating"
                         no-border
                         color="orange"
                       ></b-form-rating>
                     </div>
                   </b-col>
                   <b-col md="6">
-                    <b-form-input v-model="review.title" placeholder="Title"></b-form-input>
+                    <b-form-input
+                      v-model="my_review.title"
+                      placeholder="Title"
+                    ></b-form-input>
                     <b-form-textarea
                       id="textarea"
-                      v-model="review.body"
+                      v-model="my_review.body"
                       placeholder="Review in short..."
                       size="sm"
                       class="mt-2"
                     ></b-form-textarea>
-                    <b-button variant="warning" class="mt-2 greenBtn">Submit</b-button>
+                    <b-button variant="warning" class="mt-2 greenBtn"
+                      >Submit</b-button
+                    >
                   </b-col>
                 </b-row>
               </b-tab>
@@ -147,14 +175,10 @@
         <div class="related-product-panel">
           <h5>You May Also Like</h5>
           <div class="related-product-container">
-
             <product :products="products.data"></product>
-          
           </div>
           <div class="related-product-panel-insider">
-            <b-button>
-              <b-icon icon="arrow-down"></b-icon>Load More
-            </b-button>
+            <b-button> <b-icon icon="arrow-down"></b-icon>Load More </b-button>
           </div>
         </div>
       </b-col>
@@ -168,23 +192,24 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     ImageZoom,
-    Product
+    Product,
   },
 
   data() {
     return {
       imageZoomed: "",
       isZoomed: false,
-      review: {
+      my_review: {
         title: "",
-        body: ""
+        body: "",
+        rating:"5",
       },
-      product:{},//load the product with the slug query and store in single object for this page details
-      product_slug:"",//to store product slug form the url
+      avg_rating:'1',
+      product: {}, //load the product with the slug query and store in single object for this page details
+      product_slug: "", //to store product slug form the url
       products: [], //for loding more products content on product details page
-  
-      render_product_block:true,
-      
+
+      render_product_block: true,
     };
   },
   created() {
@@ -208,31 +233,36 @@ export default {
       },
 
   */
-
   },
-mounted () {
-  // this.scrollToTop();
-},
-watch:{
-    $route:function(){
+  mounted() {
+    // this.scrollToTop();
+  },
+  watch: {
+    $route: function() {
       this.getIdFromUrl();
+    },
   },
-},
 
   computed: {
     ...mapGetters({
       // products: "cart/getProducts"
-    })
+    }),
   },
   methods: {
     getIdFromUrl() {
-      this.scrollToTop();//take page to top
-      this.product_slug = this.$route.params.slug;//get product slug from the url.
-      this.loadProduct(this.product_slug);  //load the product as per the slug
-      this.relatedProducts();  //load other related project for the page. 
+      this.scrollToTop(); //take page to top
+      this.product_slug = this.$route.params.slug; //get product slug from the url.
+      this.loadProduct(this.product_slug); //load the product as per the slug
+      this.relatedProducts(); //load other related project for the page.
     },
-      addToCart(productId,name,price,img) {
-      let payload = { productId: productId, quantity: 1,name:name,price:price,img:img};
+    addToCart(productId, name, price, img) {
+      let payload = {
+        productId: productId,
+        quantity: 1,
+        name: name,
+        price: price,
+        img: img,
+      };
       // this.$store.commit('pushCart', payload);
 
       // // or direct send payload and its key like below
@@ -245,38 +275,41 @@ watch:{
       // instead using dispatch for actions
       this.$store.dispatch("cart/addProductToCart", payload);
     },
-    productDetailParent(value){
-        this.loadProduct(value);
+    productDetailParent(value) {
+      this.loadProduct(value);
     },
-    scrollToTop(){
-      window.scrollTo(0,0);
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
-    loadProduct(product_slug){
-        this.$Progress.start()
-        this.$http.get("https://eshop.test/api/productDFS/"+product_slug)
-        .then(response=>{
-            this.product = response.data.data[0]
-            // console.log(response.data.data[0]);
-            
-            this.imageZoomed = this.product.image[0];
+    loadProduct(product_slug) {
+      this.$Progress.start();
+      this.$http
+        .get("https://eshop.test/api/productDFS/" + product_slug)
+        .then((response) => {
+          this.product = response.data.data[0];
+          // this.reviews=response.data.data[0].reviews;
+          // console.log(response.data.data[0]);
 
-            this.$Progress.finish();
-              
-        }).catch(error=>{
+          this.imageZoomed = this.product.image[0];
+
+          this.$Progress.finish();
+        })
+        .catch((error) => {
           console.log(error);
-          this.$Progress.fail()
+          this.$Progress.fail();
         });
-
     },
     relatedProducts(url) {
-      //load other project except the current product 
-      //so pass the current project slug to ovoid it in backend 
-      let url_link = url || "https://eshop.test/api/relatedProducts/"+ this.product_slug;
-      this.$http.get(url_link)
-        .then(response => {
+      //load other project except the current product
+      //so pass the current project slug to ovoid it in backend
+      let url_link =
+        url || "https://eshop.test/api/relatedProducts/" + this.product_slug;
+      this.$http
+        .get(url_link)
+        .then((response) => {
           this.products = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -291,8 +324,8 @@ watch:{
     },
     clickToViewImage(image) {
       this.imageZoomed = image;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -326,7 +359,7 @@ watch:{
 .related-product-panel h5 {
   padding-bottom: 5px;
   /* margin: 0.5em; */
-  color: #DC143C;
+  color: #dc143c;
 }
 .product-details-section-second h5 {
   border-bottom: 1px solid #eee;
@@ -339,24 +372,24 @@ watch:{
   justify-content: center;
 }
 .related-product-panel-insider button {
-  background: #DC143C;
+  background: #dc143c;
   color: white;
-  border: 1px solid #DC143C;
+  border: 1px solid #dc143c;
 }
 .related-product-panel button:hover {
   background: none;
-  border: 1px solid #DC143C;
-  color: #DC143C;
+  border: 1px solid #dc143c;
+  color: #dc143c;
 }
 .greenBtn {
-  background: #DC143C;
+  background: #dc143c;
   color: white;
-  border: 1px solid #DC143C;
+  border: 1px solid #dc143c;
 }
 .greenBtn:hover {
   background: none;
-  border: 1px solid #DC143C;
-  color: #DC143C;
+  border: 1px solid #dc143c;
+  color: #dc143c;
 }
 .img-small-nav {
   padding: 2px;
@@ -398,11 +431,11 @@ watch:{
   height: 425px;
 }
 .btn-cart {
-  border: 1px solid #DC143C61;
+  border: 1px solid #dc143c61;
   outline: 0;
   padding: 10px;
-  color: #DC143C;
-  background-color: #DC143C00;
+  color: #dc143c;
+  background-color: #dc143c00;
   text-align: center;
   cursor: pointer;
   width: 15em;
@@ -414,8 +447,8 @@ watch:{
 .btn-cart:hover {
   opacity: 0.9;
   color: white;
-  border: 1px solid #DC143C61;
-  background-color: #DC143C;
+  border: 1px solid #dc143c61;
+  background-color: #dc143c;
 }
 
 .btn-wishlist {
