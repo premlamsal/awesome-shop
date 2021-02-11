@@ -61,9 +61,7 @@
               >
                 <b-icon icon="cart"></b-icon>Add to Cart
               </b-button>
-              <b-button class="btn-wishlist">
-                <b-icon icon="heart"></b-icon>Add to wishlist
-              </b-button>
+
             </div>
             <div class="product-details-inside-container mt-4">
               <div class="product-highligts-info">
@@ -147,8 +145,8 @@
                         style="padding:0px;"
                         id="rating-inline"
                         inline
-                        :value="my_review.rating"
                         no-border
+                        v-model="my_review.rating"
                         color="orange"
                       ></b-form-rating>
                     </div>

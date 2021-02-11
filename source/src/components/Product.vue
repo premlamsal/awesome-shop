@@ -77,15 +77,13 @@ export default {
 };
 </script>
 <style scoped>
-.self-product-container{
-  display:flex;
-}
+
 .product-card {
   box-shadow: 1px 2px 5px 0 rgb(220,20,60,0.28);
   max-width: 13em;
   text-align: center;
   display: inline-block;
-  margin-right: 1px;
+  margin-right: 0.8em;
   margin-bottom:5px;
   /* padding: 0.5em; */
   background: #fff;
