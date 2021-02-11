@@ -98,7 +98,18 @@ export default {
       this.$store.dispatch("cart/decrementTheCart", productId);
     },
     incrementTheCart(productId) {
-      this.$store.dispatch("cart/incrementTheCart", productId);
+      this.$store.dispatch("cart/incrementTheCart", productId)
+      .then((response)=>{
+          this.$toast.success(response, {
+            timeout: 4000,
+          });
+      })
+      .catch((error)=>{
+
+          this.$toast.error(error, {
+            timeout: 4000,
+          });
+      })
     },
     removeProductFromCart(productId) {
       this.$store.dispatch("cart/removeProductFromCart", productId);

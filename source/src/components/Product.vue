@@ -68,7 +68,18 @@ export default {
       //     });
 
       // instead using dispatch for actions
-      this.$store.dispatch("cart/addProductToCart", payload);
+      this.$store.dispatch("cart/addProductToCart", payload)
+      .then((response)=>{
+          this.$toast.success(response, {
+            timeout: 4000,
+          });
+      })
+      .catch((error)=>{
+
+          this.$toast.error(error, {
+            timeout: 4000,
+          });
+      })
     },
     removeFromCart(productId) {
       this.$store.dispatch("cart/removeProductFromCart", productId);

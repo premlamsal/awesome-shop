@@ -1,3 +1,9 @@
+import Axios from "axios";
+
+// axios allow cross origin
+Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
+
 const state = {
   cart: [],
 };
@@ -63,14 +69,42 @@ const mutations = {
 const actions = {
 
   addProductToCart(context, payload) {
-    const cart = context.state.cart.find((cart) => {
-      return cart.productId == payload.productId;
+    return new Promise((resolve,reject)=>{
+
+      const cart =context.state.cart.find((cart)=>{
+        return cart.productId == payload.productId;
+      });
+      const car_qty=cart.productQuantity;
+      
+      Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+      
+      Axios.defaults.headers.common['Accept']='application/json';
+  
+      Axios.get('https://eshop.test/api/checkstock/'+ payload.productId)
+      .then((response)=>{
+  
+        if(response.data.instock_quantity>=car_qty){
+  
+          if (!cart) {
+            context.commit("pushCart", payload);
+            resolve('Added Item to Cart');
+          } else {
+            context.commit("increaseQuantityInCart", cart);
+            resolve('Product quantity incremented.');
+          }
+  
+        }else{
+            reject('Sorry no stock availabe for this product.')
+        }
+  
+  
+      })
+      .catch(()=>{
+      });
+
     });
-    if (!cart) {
-      context.commit("pushCart", payload);
-    } else {
-      context.commit("increaseQuantityInCart", cart);
-    }
+   
+   
   },
   decrementTheCart(context, productId) {
     const cart = context.state.cart.find((cart) => {
@@ -91,12 +125,37 @@ const actions = {
     } 
   },
   incrementTheCart(context, productId){
-    const cart =context.state.cart.find((cart)=>{
-      return cart.productId == productId;
+
+    return new Promise((resolve,reject)=>{
+
+      const cart =context.state.cart.find((cart)=>{
+        return cart.productId == productId;
+      });
+      const car_qty=cart.productQuantity;
+      
+      Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+  
+      Axios.defaults.headers.common['Accept']='application/json';
+  
+      Axios.get('https://eshop.test/api/checkstock/'+productId)
+      .then((response)=>{
+  
+        if(response.data.instock_quantity>=car_qty+1){
+         
+          if(cart.productQuantity>0){
+            context.commit("increaseQuantityInCart",cart);
+            resolve('Product quantity incremented.')
+          }
+        }
+        else{
+          reject('Sorry no stock availabe for this product.');
+        }
+      })
+      .catch((error)=>{
+        reject(error);
+      });
+
     });
-    if(cart.productQuantity>0){
-      context.commit("increaseQuantityInCart",cart);
-    }
   }
 };
 
