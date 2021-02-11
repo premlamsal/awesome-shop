@@ -84,7 +84,7 @@ export default {
   text-align: center;
   display: inline-block;
   margin-right: 0.8em;
-  margin-bottom:5px;
+  margin-bottom:0.8em;
   /* padding: 0.5em; */
   background: #fff;
   /* height: 25em; */
