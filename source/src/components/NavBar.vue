@@ -161,11 +161,11 @@ export default {
       this.$store.dispatch("auth/checkAuthToken").then(() => {
         this.isLoggedIn = true;
       })
-      .catch((error)=>{
+      .catch(()=>{
         // console.log(error.response.data);
-        this.$toast.error(error.response.data.message, {
-                timeout: 2000
-            });
+        // this.$toast.error(error.response.data.message, {
+        //         timeout: 2000
+        //     });
       })
     },
     logout() {
@@ -174,8 +174,8 @@ export default {
         this.$http.defaults.headers.common = { Authorization: `` };
         this.isLoggedIn=false;
       })
-      .catch((error)=>{
-        console.log(error);
+      .catch(()=>{
+        // console.log(error);
       })
     },
   },

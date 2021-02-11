@@ -78,12 +78,15 @@ export default {
           this.$toast.success(response, {
             timeout: 4000,
           });
+          // console.log(response);
       })
       .catch((error)=>{
 
           this.$toast.error(error, {
             timeout: 4000,
           });
+          // console.log(error);
+
       })
     },
     removeFromCart(productId) {

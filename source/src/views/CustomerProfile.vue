@@ -271,7 +271,6 @@ export default {
     },
     onFileChange(event){
       this.uploadedFile = event.target.files[0];
-      console.log(this.uploadedFile);
     },
     updateUser() {
       this.errors=Array();

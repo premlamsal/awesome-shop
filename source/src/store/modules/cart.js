@@ -74,7 +74,14 @@ const actions = {
       const cart =context.state.cart.find((cart)=>{
         return cart.productId == payload.productId;
       });
-      const car_qty=cart.productQuantity;
+      let car_qty
+      if(cart){
+          car_qty =cart.productQuantity;
+      }
+      else{
+        car_qty=0;
+      }
+      console.log(car_qty);
       
       Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
       
@@ -82,7 +89,6 @@ const actions = {
   
       Axios.get('https://eshop.test/api/checkstock/'+ payload.productId)
       .then((response)=>{
-  
         if(response.data.instock_quantity>=car_qty+1){
   
           if (!cart) {
@@ -99,7 +105,8 @@ const actions = {
   
   
       })
-      .catch(()=>{
+      .catch((error)=>{
+        reject(error.response.data);
       });
 
     });
