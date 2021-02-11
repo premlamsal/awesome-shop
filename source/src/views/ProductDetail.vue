@@ -111,7 +111,7 @@
               <div class="insider-review-others" v-if="product.reviews!=null">
                 <b-row v-for="review in product.reviews" v-bind:key="review.id">
                   <b-col md="2">
-                    <h6>{{review.title}}</h6>
+                    <h6>{{review.user.firstname}} {{review.user.lastname}}</h6>
                     <div class="product-rating">
                       <b-form-rating
                         style="padding:0px;"
