@@ -81,8 +81,6 @@ const actions = {
       else{
         car_qty=0;
       }
-      console.log(car_qty);
-      
       Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
       
       Axios.defaults.headers.common['Accept']='application/json';
