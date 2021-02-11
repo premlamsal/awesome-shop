@@ -83,7 +83,7 @@ const actions = {
       Axios.get('https://eshop.test/api/checkstock/'+ payload.productId)
       .then((response)=>{
   
-        if(response.data.instock_quantity>=car_qty){
+        if(response.data.instock_quantity>=car_qty+1){
   
           if (!cart) {
             context.commit("pushCart", payload);
@@ -94,7 +94,7 @@ const actions = {
           }
   
         }else{
-            reject('Sorry no stock availabe for this product.')
+            reject('Sorry no stock availabe for this product.');
         }
   
   

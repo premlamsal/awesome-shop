@@ -9,8 +9,7 @@
               <div class="author">
                 <img
                   class="avatar border-gray"
-                  src="@/assets/niti-shah-e1554710253928-1024x881.jpg"
-                />
+                  :src="user.image"                />
                 <h5 class="title" style="">
                   {{ user.firstname }} {{ user.lastname }}
                 </h5>
@@ -188,6 +187,20 @@
                   </div>
                 </div>
               </div>
+                <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                      <input
+                    type="file"
+                    id="file"
+                    @change="onFileChange"
+                  />
+                  <span v-if="errors.file" :class="['errorText']">{{
+                    errors.file[0]
+                  }}</span>
+                  </div>
+                </div>
+              </div>
               <div class="row">
                 <div class="update ml-auto mr-auto">
                   <button @click="updateUser" class="btn btn-primary btn-round">
@@ -217,6 +230,7 @@ export default {
     return {
       user: {
         firstname: "",
+        image:"",
         lastname: "",
         phone: "",
         details: {
@@ -228,6 +242,7 @@ export default {
           about: "",
         },
       },
+      uploadedFile:null,
       errors: [],
     };
   },
@@ -244,6 +259,7 @@ export default {
           this.user.firstname = user_data.firstname;
           this.user.lastname = user_data.lastname;
           this.user.balance = user_data.balance;
+          this.user.image = user_data.image;
           this.user.email = user_data.email;
           if (user_data.details != null) {
             this.user.details=user_data.details;
@@ -253,10 +269,29 @@ export default {
           console.log(error.response.data);
         });
     },
+    onFileChange(event){
+      this.uploadedFile = event.target.files[0];
+      console.log(this.uploadedFile);
+    },
     updateUser() {
       this.errors=Array();
+
+      let formData = new FormData();
+      formData.append("firstname",this.user.firstname);
+      formData.append("lastname",this.user.lastname);
+      formData.append("details_phone",this.user.details.phone);
+      formData.append("details_address",this.user.details.address);
+      formData.append("details_esewa_id",this.user.details.esewa_id);
+      formData.append("details_khalti_id",this.user.details.khalti_id);
+      formData.append("details_about",this.user.details.about);
+      formData.append("details_postal",this.user.details.postal);
+      formData.append("details_city",this.user.details.city);
+      formData.append("details_created_at",this.user.details.created_at);
+      formData.append("details_updated_at",this.user.details.updated_at);
+      formData.append("file",this.uploadedFile);
+
       this.$http
-        .post("https://eshop.test/api/updateUser", this.user)
+        .post("https://eshop.test/api/updateUser",formData)
         .then((response) => {
           this.user = response.data.data[0];
         })
