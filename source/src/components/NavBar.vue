@@ -35,8 +35,7 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class>
-          
-          <b-nav-item href="#">
+            <b-nav-item href="#">
               <router-link to="/customer/mybooks" class="navbar-item" right>
                 Upload
               </router-link>
@@ -49,7 +48,7 @@
                 <b-badge variant="warning">{{ totalItemsInCart }}</b-badge>
               </router-link>
             </b-nav-item>
-               
+
             <b-dropdown
               id="dropdown-right"
               right
@@ -100,7 +99,6 @@
 
     <Category v-bind:categories="categories_list" />
 
-   
     <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
@@ -119,7 +117,7 @@ export default {
     return {
       categories_list: [],
       isLoggedIn: false,
-      search_key:'',
+      search_key: "",
     };
   },
   computed: {
@@ -132,20 +130,19 @@ export default {
     this.getCategories();
     // this.checkIsLogIn();
   },
-  watch:{
-    $route:function(){
+  watch: {
+    $route: function() {
       this.checkIsLogIn();
     },
   },
   methods: {
-    makeSearch(){
-      const search_key=this.search_key;
-      if(search_key!=''){
-       this.$router.push({ name: 'Search', params: { key: search_key}})
+    makeSearch() {
+      const search_key = this.search_key;
+      if (search_key != "") {
+        this.$router.push({ name: "Search", params: { key: search_key } });
       }
     },
     getCategories() {
-
       // will get categories instead of menu
 
       this.$http
@@ -158,25 +155,40 @@ export default {
         });
     },
     checkIsLogIn() {
-      this.$store.dispatch("auth/checkAuthToken").then(() => {
-        this.isLoggedIn = true;
-      })
-      .catch(()=>{
-        // console.log(error.response.data);
-        // this.$toast.error(error.response.data.message, {
-        //         timeout: 2000
-        //     });
-      })
+      //check if token available
+      //if only token available then check for check auth token
+      if (this.hasToken) {
+        this.$store
+          .dispatch("auth/checkAuthToken")
+          .then(() => {
+            this.isLoggedIn = true;
+          })
+          .catch((error) => {
+            // console.log(error.response.data);
+
+            if (error.response.status == 401) {
+              // this.$toast.error(error.response.data.message, {
+              //                 timeout: 2000
+              //             });
+
+              this.logout();
+            }
+          });
+      } else {
+        //stay on this page
+      }
     },
     logout() {
-      this.$store.dispatch("auth/logout").then(() => {
-        this.$router.push("/login");
-        this.$http.defaults.headers.common = { Authorization: `` };
-        this.isLoggedIn=false;
-      })
-      .catch(()=>{
-        // console.log(error);
-      })
+      this.$store
+        .dispatch("auth/logout")
+        .then(() => {
+          this.$router.push("/login");
+          this.$http.defaults.headers.common = { Authorization: `` };
+          this.isLoggedIn = false;
+        })
+        .catch(() => {
+          // console.log(error);
+        });
     },
   },
 };
@@ -197,12 +209,12 @@ li {
   width: 100%;
 }
 a {
-  color: #DC143C;
+  color: #dc143c;
   opacity: 0.8;
 }
 a:hover {
   opacity: 1;
-  color: #DC143C;
+  color: #dc143c;
 }
 input.search-input {
   width: 30em;
@@ -210,7 +222,7 @@ input.search-input {
   background: #eeeeee91;
   border: 0px;
   transition: ease-in-out, width 0.35s ease-in-out;
-  box-shadow: 0px 2px 4px -2px #DC143C;
+  box-shadow: 0px 2px 4px -2px #dc143c;
   padding-left: 8px;
 }
 .nav-bar {
@@ -224,14 +236,14 @@ input.search-input:focus {
   border: 0px !important;
   /* width: 50em; */
   background: #eee;
-  box-shadow: 0px 2px 4px -2px #DC143C !important;
+  box-shadow: 0px 2px 4px -2px #dc143c !important;
 }
 .search-bar button {
   border: 0px;
   position: absolute;
   right: 2px;
   background: unset;
-  color: #DC143C;
+  color: #dc143c;
   top: 8px;
 }
 
