@@ -8,18 +8,18 @@ const state = {
   cart: [],
 };
 const getters = {
-  getProducts(state) {
-    return state.products;
+  getBooks(state) {
+    return state.books;
   },
-  getTotalProduct(state) {
-    return state.products.length;
+  getTotalBook(state) {
+    return state.books.length;
   },
   getCartItems(state) {
     return state.cart;
   },
   getTotalItemsInCart(state) {
     return state.cart.reduce(function (carry, cartItem) {
-      return carry + parseFloat(cartItem.productQuantity);
+      return carry + parseFloat(cartItem.bookQuantity);
     }, 0);
   },
 
@@ -27,7 +27,7 @@ const getters = {
     return state.cart.reduce(function (carry, cartItem) {
       return (
         carry +
-        parseFloat(cartItem.productQuantity) * parseFloat(cartItem.productPrice)
+        parseFloat(cartItem.bookQuantity) * parseFloat(cartItem.bookPrice)
       );
     }, 0);
   },
@@ -35,32 +35,32 @@ const getters = {
 
 const mutations = {
   pushCart(state, payload) {
-    // const product = state.products.find((product) => {
-    //   return product.id == payload.productId;
+    // const book = state.books.find((book) => {
+    //   return book.id == payload.bookId;
     // });
 
     const newCartItem = {
-      productId: payload.productId,
-      productName: payload.name,
-      productPrice: payload.price,
-      productImage: payload.img,
-      productQuantity: payload.quantity,
-      productLineTotal: payload.price * payload.quantity,
+      bookId: payload.bookId,
+      bookName: payload.name,
+      bookPrice: payload.price,
+      bookImage: payload.img,
+      bookQuantity: payload.quantity,
+      bookLineTotal: payload.price * payload.quantity,
     };
 
     state.cart.push(newCartItem);
   },
   increaseQuantityInCart(state, cart) {
-    cart.productQuantity++;
-    cart.productLineTotal = cart.productQuantity * cart.productPrice;
+    cart.bookQuantity++;
+    cart.bookLineTotal = cart.bookQuantity * cart.bookPrice;
   },
   decreaseQuantityInCart(state, cart) {
-    cart.productQuantity--;
-    cart.productLineTotal = cart.productQuantity * cart.productPrice;
+    cart.bookQuantity--;
+    cart.bookLineTotal = cart.bookQuantity * cart.bookPrice;
   },
-  popCart(state, productId) {
+  popCart(state, bookId) {
     const cart = state.cart.find((cart) => {
-      return cart.productId == productId;
+      return cart.bookId == bookId;
     });
     state.cart.splice(state.cart.indexOf(cart), 1);
   },
@@ -68,15 +68,15 @@ const mutations = {
 
 const actions = {
 
-  addProductToCart(context, payload) {
+  addBookToCart(context, payload) {
     return new Promise((resolve,reject)=>{
 
       const cart =context.state.cart.find((cart)=>{
-        return cart.productId == payload.productId;
+        return cart.bookId == payload.bookId;
       });
       let car_qty
       if(cart){
-          car_qty =cart.productQuantity;
+          car_qty =cart.bookQuantity;
       }
       else{
         car_qty=0;
@@ -85,7 +85,7 @@ const actions = {
       
       Axios.defaults.headers.common['Accept']='application/json';
   
-      Axios.get('https://eshop.test/api/checkstock/'+ payload.productId)
+      Axios.get('https://eshop.test/api/frontend/checkstock/'+ payload.bookId)
       .then((response)=>{
         if(response.data.instock_quantity>=car_qty+1){
   
@@ -94,11 +94,11 @@ const actions = {
             resolve('Added Item to Cart');
           } else {
             context.commit("increaseQuantityInCart", cart);
-            resolve('Product quantity incremented.');
+            resolve('Book quantity incremented.');
           }
   
         }else{
-            reject('Sorry no stock availabe for this product.');
+            reject('Sorry no stock availabe for this book.');
         }
   
   
@@ -111,49 +111,49 @@ const actions = {
    
    
   },
-  decrementTheCart(context, productId) {
+  decrementTheCart(context, bookId) {
     const cart = context.state.cart.find((cart) => {
-      return cart.productId == productId;
+      return cart.bookId == bookId;
     });
 
-    if (cart.productQuantity > 1) {
+    if (cart.bookQuantity > 1) {
       context.commit("decreaseQuantityInCart", cart);
     } 
   },
-  removeProductFromCart(context, productId) {
+  removeBookFromCart(context, bookId) {
     const cart = context.state.cart.find((cart) => {
-      return cart.productId == productId;
+      return cart.bookId == bookId;
     });
 
-    if (cart.productQuantity > 0) {
-      context.commit("popCart", productId);
+    if (cart.bookQuantity > 0) {
+      context.commit("popCart", bookId);
     } 
   },
-  incrementTheCart(context, productId){
+  incrementTheCart(context, bookId){
 
     return new Promise((resolve,reject)=>{
 
       const cart =context.state.cart.find((cart)=>{
-        return cart.productId == productId;
+        return cart.bookId == bookId;
       });
-      const car_qty=cart.productQuantity;
+      const car_qty=cart.bookQuantity;
       
       Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
   
       Axios.defaults.headers.common['Accept']='application/json';
   
-      Axios.get('https://eshop.test/api/checkstock/'+productId)
+      Axios.get('https://eshop.test/api/frontend/checkstock/'+bookId)
       .then((response)=>{
   
         if(response.data.instock_quantity>=car_qty+1){
          
-          if(cart.productQuantity>0){
+          if(cart.bookQuantity>0){
             context.commit("increaseQuantityInCart",cart);
-            resolve('Product quantity incremented.')
+            resolve('Book quantity incremented.')
           }
         }
         else{
-          reject('Sorry no stock availabe for this product.');
+          reject('Sorry no stock availabe for this book.');
         }
       })
       .catch((error)=>{

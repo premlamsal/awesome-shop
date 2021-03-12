@@ -7,7 +7,7 @@
           <button class="btn btn-success mt-3" @click="showModal()">
             Upload Book
           </button>
-          <div v-if="products.length > 0">
+          <div v-if="books.length > 0">
             <div class="card mt-4">
               <table class="table">
                 <thead>
@@ -23,13 +23,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="product in products" v-bind:key="product.id">
+                  <tr v-for="book in books" v-bind:key="book.id">
                     <td>
                       <div
                         v-for="category in categories"
                         v-bind:key="category.id"
                       >
-                        <span v-if="product.category_id === category.id">
+                        <span v-if="book.category_id === category.id">
                           {{ category.name }}
                         </span>
                       </div>
@@ -37,19 +37,19 @@
                     <td>
                       <img
                         :src="image"
-                        class="img-thumbnail product-image-inside-table"
-                        :alt="product.name"
-                        v-for="image in product.image"
+                        class="img-thumbnail book-image-inside-table"
+                        :alt="book.name"
+                        v-for="image in book.image"
                         v-bind:key="image"
                       />
                     </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.slug }}</td>
-                    <td>Rs. {{ product.price }}</td>
-                    <td>{{ product.quantity }}</td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.slug }}</td>
+                    <td>Rs. {{ book.price }}</td>
+                    <td>{{ book.quantity }}</td>
                     <td>
                       <div v-for="unit in units" v-bind:key="unit.id">
-                        <span v-if="product.unit_id === unit.id">
+                        <span v-if="book.unit_id === unit.id">
                           {{ unit.short_name }}
                         </span>
                       </div>
@@ -57,7 +57,7 @@
                     <td>
                       <button
                         class="btn btn-warning m-2"
-                        @click="loadBookDetails(product.slug)"
+                        @click="loadBookDetails(book.slug)"
                       >
                         <b-icon icon="gear" font-scale="1.2"></b-icon>
                       </button>
@@ -285,7 +285,7 @@ export default {
   components: {},
   data() {
     return {
-      products: [],
+      books: [],
       book: {
         category: "",
         name: "",
@@ -336,9 +336,9 @@ export default {
       this.$Progress.start();
 
       this.$http
-        .get("https://eshop.test/api/loadMyBooks")
+        .get("https://eshop.test/api/frontend/loadMyBooks")
         .then((response) => {
-          this.products = response.data.data;
+          this.books = response.data.data;
           this.$Progress.finish();
         })
         .catch((error) => {
@@ -357,20 +357,20 @@ export default {
       if (this.book_action === "edit") {
         this.clearBook();
         this.$http
-          .get("https://eshop.test/api/productDFS/" + slug)
+          .get("https://eshop.test/api/frontend/bookDFS/" + slug)
           .then((response) => {
-            const product = response.data.data[0];
-            this.book.category = product.category_id;
-            this.book.name = product.name;
-            this.book.price = product.price;
-            this.book.discount = product.discount;
-            this.book.more_info = product.more_info;
-            this.book.description = product.description;
-            this.book.unit = product.unit_id;
-            this.book.quantity = product.quantity;
-            this.book.hightlights = product.hightlights;
-            this.book.location=product.location;
-            this.book.id = product.id;
+            const book = response.data.data[0];
+            this.book.category = book.category_id;
+            this.book.name = book.name;
+            this.book.price = book.price;
+            this.book.discount = book.discount;
+            this.book.more_info = book.more_info;
+            this.book.description = book.description;
+            this.book.unit = book.unit_id;
+            this.book.quantity = book.quantity;
+            this.book.hightlights = book.hightlights;
+            this.book.location=book.location;
+            this.book.id = book.id;
             this.$bvModal.show("bv-modal-addbook");
             this.$Progress.finish();
           })
@@ -393,7 +393,7 @@ export default {
       this.$Progress.start();
 
       this.$http
-        .get("https://eshop.test/api/categories")
+        .get("https://eshop.test/api/frontend/categories")
         .then((response) => {
           // console.log(response.data);
           this.categories = response.data.data;
@@ -412,7 +412,7 @@ export default {
       this.$Progress.start();
 
       this.$http
-        .get("https://eshop.test/api/units")
+        .get("https://eshop.test/api/frontend/units")
         .then((response) => {
           // console.log(response.data);
           this.units = response.data.data;
@@ -455,7 +455,7 @@ export default {
 
 
       this.$http
-        .post("https://eshop.test/api/editBook", formData, {
+        .post("https://eshop.test/api/frontend/editBook", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -474,7 +474,6 @@ export default {
             timeout: 4000,
           });
           this.errors = error.response.data.errors;
-          this.clearBook();
           this.$Progress.fail();
         });
     },
@@ -506,7 +505,7 @@ export default {
 
 
       this.$http
-        .post("https://eshop.test/api/uploadBook", formData, {
+        .post("https://eshop.test/api/frontend/uploadBook", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -526,7 +525,6 @@ export default {
             timeout: 4000,
           });
           this.errors = error.response.data.errors;
-          this.clearBook();
           this.$Progress.fail();
         });
     },
@@ -538,7 +536,7 @@ export default {
   background: white;
   padding: 5em;
 }
-.product-image-inside-table {
+.book-image-inside-table {
   width: 100px;
   height: 100px;
   border-radius: 64px;

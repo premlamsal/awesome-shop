@@ -6,13 +6,13 @@
    
       <b-col cols="9">
         <div class="category-header mt-4">
-          <h4>Products for this Category</h4>
-          <div class="product-panel mt-5">
-            <div class="product-panel-insider">
-              <product :products="products.data"></product>
+          <h4>Books for this Category</h4>
+          <div class="book-panel mt-5">
+            <div class="book-panel-insider">
+              <book :books="books.data"></book>
             </div>
             <div class="inner-btn mb-4">
-              <b-button variant="default" class="loadmore-btn" @click="loadProductsByCategory(pagination.next_link)"
+              <b-button variant="default" class="loadmore-btn" @click="loadBooksByCategory(pagination.next_link)"
                 v-if="pagination.next_link!=null">
                 <b-icon icon="arrow-down"></b-icon>Load More
               </b-button>
@@ -26,20 +26,20 @@
       </div>
 </template>
 <script>
-import Product from "../components/Product";
+import Book from "../components/Book";
 import { mapGetters } from "vuex";
 export default {
   components: {
-    Product,
+    Book,
   },
 
   data() {
     return {
-      category_slug: "", //to store product slug form the url
-      products: {
-        data: [], //will hold all the product
-      }, //for loding more products content on product details page
-      render_product_block: true,
+      category_slug: "", //to store book slug form the url
+      books: {
+        data: [], //will hold all the book
+      }, //for loding more books content on book details page
+      render_book_block: true,
       categories:{},
        pagination: {},
     };
@@ -59,14 +59,14 @@ export default {
 
   computed: {
     ...mapGetters({
-      // products: "cart/getProducts"
+      // books: "cart/getBooks"
     }),
   },
   methods: {
     getIdFromUrl() {
       this.scrollToTop(); //take page to top
       this.category_slug = this.$route.params.slug; //get category slug from the url.
-      this.loadProductsByCategory(); //load the product as per the slug
+      this.loadBooksByCategory(); //load the book as per the slug
     },
       makePagination(meta, links) {
       let pagination = {
@@ -89,7 +89,7 @@ export default {
       // will get categories instead of menu
 
       this.$http
-        .get("https://eshop.test/api/getCategoriesMenu")
+        .get("https://eshop.test/api/frontend/getCategoriesMenu")
         .then((response) => {
           this.categories = response.data.data;
         })
@@ -97,20 +97,20 @@ export default {
           console.log(error);
         });
     },
-    loadProductsByCategory(page_url) {
+    loadBooksByCategory(page_url) {
       this.$Progress.start();
 
-        page_url = page_url || "https://eshop.test/api/category/" + this.category_slug;
+        page_url = page_url || "https://eshop.test/api/frontend/category/" + this.category_slug;
       this.$http
         .get(page_url)
         .then((response) => {
           
             response.data.data.forEach((data) => {
-              this.products.data.push(data);
+              this.books.data.push(data);
             });
 
-            this.products.meta = response.data.meta;
-            this.products.links = response.data.links;
+            this.books.meta = response.data.meta;
+            this.books.links = response.data.links;
 
             this.makePagination(response.data.meta, response.data.links);
              this.$Progress.finish();

@@ -146,7 +146,7 @@ export default {
       // will get categories instead of menu
 
       this.$http
-        .get("https://eshop.test/api/getCategoriesMenu")
+        .get("https://eshop.test/api/frontend/getCategoriesMenu")
         .then((response) => {
           this.categories_list = response.data.data;
         })

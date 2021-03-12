@@ -8,21 +8,24 @@
             <h5>Please choose a payment method</h5>
             <div class="pay-box-outside">
               <div class="payment-img-holder">
-                <form action="https://uat.esewa.com.np/epay/main" method="POST">
-                  <input :value="grandTotal" name="tAmt" type="hidden" />
-                  <input :value="grandTotal" name="amt" type="hidden" />
-                  <input value="0" name="txAmt" type="hidden" />
-                  <input value="0" name="psc" type="hidden" />
-                  <input value="0" name="pdc" type="hidden" />
-                  <input value="epay_payment" name="scd" type="hidden" />
-                  <input value="ee2c3ca1-696b-4cc5-a6be-2c40d929d453" name="pid" type="hidden" />
+
+
+
+                <form :action="esewa_path" method="POST">
+                  <input v-bind:value="esewa_params.tAmt" name="tAmt" type="hidden" />
+                  <input v-bind:value="esewa_params.amt" name="amt" type="hidden" />
+                  <input v-bind:value="esewa_params.txAmt" name="txAmt" type="hidden" />
+                  <input v-bind:value="esewa_params.psc" name="psc" type="hidden" />
+                  <input v-bind:value="esewa_params.pdc" name="pdc" type="hidden" />
+                  <input v-bind:value="esewa_params.scd_merchant" name="scd" type="hidden" />
+                  <input v-bind:value="esewa_params.product_id" name="pid" type="hidden" />
                   <input
-                    value="http://merchant.com.np/page/esewa_payment_success?q=su"
+                    v-bind:value="esewa_params.su"
                     type="hidden"
                     name="su"
                   />
                   <input
-                    value="http://merchant.com.np/page/esewa_payment_failed?q=fu"
+                    v-bind:value="esewa_params.fu"
                     type="hidden"
                     name="fu"
                   />
@@ -81,7 +84,11 @@ export default {
   name: "Cart",
   components:{VueKhalti},
   data() {
+
+    let self=this;
+
     return {
+
 
       //esewa params
       esewa_path: "https://uat.esewa.com.np/epay/main",
@@ -91,34 +98,35 @@ export default {
         pdc: 0,
         txAmt: 0,
         tAmt: 100,
-        pid: "ee2c3ca1-696b-4cc5-a6be-2c40d929d453",
-        scd: "epay_payment",
-        su: "http://merchant.com.np/page/esewa_payment_success",
-        fu: "http://merchant.com.np/page/esewa_payment_failed",
+        product_id: "4hhj-4fgfgf",
+        scd_merchant: "EPAYTEST",
+        su: 'http://localhost:8080/#/verify/esewa',
+        fu: 'http://localhost:8080/#/error',
       },
 
       //kahlti params
       khaltiConfig: {
             "publicKey": "test_public_key_bd1183cb4a854bd9a1f352a7ec083945",
-            "productIdentity": "YOUR_PRODUCT_ID",
-            "productName": "YOUR_PRODUCT_NAME",
-            "productUrl": "YOUR_PRODUCT_URL",
-            "amount": 1000,
-            "eventHandler": {
+            "productIdentity": "fadsk",
+            "productName": "fkjnadskj",
+            "productUrl": "https://eshop.tes",
+            "amount": 12,
+            eventHandler: {
                 onSuccess (payload) {
-                    console.log(payload);
+                    // console.log(payload);
+
+                    self.verifyKhalti(payload);
+
                 },
                 onError (error) {
                     console.log(error);
                 },
                 onClose () {
                     console.log('widget is closing');
+
                 }
             }
-        }
-
-
-
+        },
 
     
     };
@@ -127,9 +135,112 @@ export default {
     ...mapGetters({
       totalItemsInCart: "cart/getTotalItemsInCart",
       grandTotal: "cart/getGrandTotalCart",
+      getCartItems: "cart/getCartItems",
     }),
   },
+  created(){
+    
+
+    this.callBackForCartCheck();
+  },
   methods: {
+
+    verifyKhalti(payload){
+      // console.log('hello from khalti');
+      let formData =  new FormData();
+      formData.append('khalti',JSON.stringify(payload));
+      formData.append('cart',JSON.stringify(this.getCartItems));
+      formData.append('_METHOD','POST');
+
+      this.$http.post('https://eshop.test/api/frontend/verify/khalti',formData)
+      .then((response)=>{
+
+        console.log(response);
+
+      })
+      .catch((response)=>{
+
+        console.log(response);
+      });
+
+
+    },
+    verifyEsewa(){
+
+      //  // console.log('hello from khalti');
+      // let formData =  new formData();
+      // formData.append('khalti_payload',payload);
+      // formData.append('cart',getCartItems);
+      // formData.append('_METHOD','POST');
+      
+      // this.$http.post('https://eshop.tes/api/frontend/verify/esewa',formData)
+      // .then((response)=>{
+
+      //   console.log(response);
+
+      // })
+      // .catch((response)=>{
+
+      //   console.log(response);
+      // });
+
+
+    },
+
+
+    callBackForCartCheck(){
+
+        // const cart = JSON.stringify(this.getCartItems);
+
+        this.$http.post('https://eshop.test/api/frontend/cart/check',this.getCartItems)
+        .then((response)=>{
+
+          this.khaltiConfig.amount = (response.data.amount) * 100; //converting rs to paisa for khalti
+
+          // this.khaltiConfig.productIdentity = response.data.books_id; 
+
+          // this.khaltiConfig.productName = response.data.books_id; 
+
+          // this.khaltiConfig.productUrl = response.data.books_id; 
+
+          this.esewa_params.amt = response.data.amount; //amount for esewa
+
+          this.esewa_params.tAmt = response.data.amount; //total amount for esewa
+
+          this.esewa_params.product_id = response.data.books_id;
+
+
+
+          // console.log(response.data);
+         
+        })
+        .catch((response)=>{
+
+            console.log(response);
+        });
+  
+
+
+    },
+
+    initVar(){
+
+        this.bookIdentity=''
+        this.bookName=''
+        this.bookUrl=''
+        this.amount=this.grandTotal;
+
+    },
+
+    initEsewaVar(){
+
+
+    },
+    initKhaltiVar(){
+
+      this.khaltiConfig.amount=this.grandTotal;
+
+    },
     
     onKhaltiClick () {
         const khaltiCheckout = this.$refs.khaltiCheckout

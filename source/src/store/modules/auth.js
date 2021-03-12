@@ -38,7 +38,7 @@ const actions = {
   login(context, payload) {
     return new Promise((resolve, reject) => {
       Axios.defaults.headers.common['Accept']='application/json';
-      Axios.post(`https://eshop.test/api/login`, payload)
+      Axios.post(`https://eshop.test/api/frontend/login`, payload)
         .then((response) => {
           const token = response.data.access_token;
           const user = response.data.user;
@@ -59,7 +59,7 @@ const actions = {
   register(context,payload){
     return new Promise((resolve, reject) => {
       Axios.defaults.headers.common['Accept']='application/json';
-      Axios.post(`https://eshop.test/api/register`, payload)
+      Axios.post(`https://eshop.test/api/frontend/register`, payload)
         .then((response) => {
           const token = response.data.access_token;
           const user = response.data.user;
@@ -82,7 +82,7 @@ const actions = {
     const token = context.getters.getToken; //accessing getter from action
      Axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
       Axios.defaults.headers.common['Accept']='application/json';
-      Axios.get('https://eshop.test/api/getUser')
+      Axios.get('https://eshop.test/api/frontend/getUser')
       .then((response)=>{
         // console.log(response.data.data[0]);
         const user = response.data.data[0]

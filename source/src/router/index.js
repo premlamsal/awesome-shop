@@ -15,9 +15,9 @@ const routes = [
     },
   },
   {
-    path: "/product/:slug",
-    name: "Product",
-    component: () => import("../views/ProductDetail.vue"),
+    path: "/book/:slug",
+    name: "Book",
+    component: () => import("../views/BookDetail.vue"),
     meta: {
       requiresAuth: false,
     },
@@ -70,6 +70,25 @@ const routes = [
     path: "/customer/transactions",
     name: "Transactions",
     component: () => import("../views/Transactions.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+
+  {
+    path: "/error",
+    name: "Error",
+    component: () => import("../views/Error.vue"),
+    meta: {
+      requiresAuth: false,
+    },
+  },
+
+
+  {
+    path: "/verify/esewa",
+    name: "EsewaVerification",
+    component: () => import("../views/VerifyEsewa.vue"),
     meta: {
       requiresAuth: true,
     },

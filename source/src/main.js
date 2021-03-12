@@ -82,7 +82,7 @@ Axios.defaults.headers.common = {
 Vue.prototype.$http=Axios;
 //axios config
 
-Vue.config.productionTip = false
+Vue.config.bookionTip = false
 new Vue({
     router,
     store,

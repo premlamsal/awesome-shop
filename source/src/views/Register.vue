@@ -74,7 +74,7 @@
               {{ error }}
             </label>
             <b-button
-              variant="success"
+              variant="danger"
               class="mt-2 mb-2"
               @click="register"
               v-if="showRegisterBtn"

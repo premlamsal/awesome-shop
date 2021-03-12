@@ -1,16 +1,16 @@
 <template>
   <b-container class="bg-white">
-    <div class="product-detail-section-first mt-4" v-if="render_product_block">
+    <div class="book-detail-section-first mt-4" v-if="render_book_block">
       <b-row>
         <b-col md="4">
-          <div class="product-image-panel">
+          <div class="book-image-panel">
             <div class="pic-box">
               <!--pic-box:width:500px;height:500px-->
               <ImageZoom :url="imageZoomed" :scale="3"></ImageZoom>
             </div>
             <div class="img-small-nav d-flex justify-content-center">
               <ul>
-                <li v-for="thumb in product.thumb" :key="thumb.id">
+                <li v-for="thumb in book.thumb" :key="thumb.id">
                   <img :src="thumb" @click="clickToViewImage(thumb)" />
                 </li>
               </ul>
@@ -18,14 +18,14 @@
           </div>
         </b-col>
         <b-col md="8">
-          <div class="product-details-aside-panel">
-            <h3 style="color:#DC143C">{{product.name }}</h3>
-            <div class="product-rating">
+          <div class="book-details-aside-panel">
+            <h3 style="color:#DC143C">{{book.name }}</h3>
+            <div class="book-rating">
               <b-form-rating
                 style="padding:0px;"
                 id="rating-inline"
                 inline
-                :value="product.product_star"
+                :value="book.book_star"
                 no-border
                 color="orange"
                 readonly
@@ -35,26 +35,26 @@
               <a href="#" style="color:#DC143C">Gangotri Suppliers</a>
             </h6>
 
-            <div v-if="product.discount != 0" class="mt-2">
-              <p class="product-price">
-                <s>$ {{ product.price }}</s>
+            <div v-if="book.discount != 0" class="mt-2">
+              <p class="book-price">
+                <s>$ {{ book.price }}</s>
               </p>
-              <h3 class="product-offer-price" style="color:#DC143C">
-                $ {{ product.price - product.discount }}
+              <h3 class="book-offer-price" style="color:#DC143C">
+                $ {{ book.price - book.discount }}
               </h3>
             </div>
             <div v-else class="mt-2">
-              <h3 style="color:#DC143C">Rs. {{ product.price }}</h3>
+              <h3 style="color:#DC143C">Rs. {{ book.price }}</h3>
             </div>
 
-            <div class="product-buttons mt-3">
+            <div class="book-buttons mt-3">
               <b-button
                 @click="
                   addToCart(
-                    product.id,
-                    product.name,
-                    product.price,
-                    product.image[0]
+                    book.id,
+                    book.name,
+                    book.price,
+                    book.image[0]
                   )
                 "
                 class="btn-cart"
@@ -63,14 +63,14 @@
               </b-button>
 
             </div>
-            <div class="product-details-inside-container mt-4">
-              <div class="product-highligts-info">
+            <div class="book-details-inside-container mt-4">
+              <div class="book-highligts-info">
                 <b-row>
                   <b-col md="1">Highligts</b-col>
                   <b-col md="5">
                     <ul>
                       {{
-                        product.highligts
+                        book.highligts
                       }}
                     </ul>
                   </b-col>
@@ -79,7 +79,7 @@
                 <b-row class="mt-3">
                   <b-col>
                     Location
-                    {{ product.location }}
+                    {{ book.location }}
                   </b-col>
                 </b-row>
               </div>
@@ -90,27 +90,27 @@
     </div>
     <b-row>
       <b-col>
-        <div class="product-details-section-second">
+        <div class="book-details-section-second">
           <div class="tabs">
             <b-tabs content-class="mt-3" align="center">
               <b-tab title="Description" active>
-                <h6>Product Information</h6>
-                {{ product.description }}
+                <h6>Book Information</h6>
+                {{ book.description }}
               </b-tab>
               <b-tab title="Additional Information">
-                {{ product.more_info }}
+                {{ book.more_info }}
               </b-tab>
               <b-tab title="Shipping & returns">
                 <h6>Delivery & returns</h6>
-                {{ product.shipping_return_info }}
+                {{ book.shipping_return_info }}
               </b-tab>
-              <b-tab title="Product Reviews">
+              <b-tab title="Book Reviews">
 
-              <div class="insider-review-others" v-if="product.reviews!=null">
-                <b-row v-for="review in product.reviews" v-bind:key="review.id">
+              <div class="insider-review-others" v-if="book.reviews!=null">
+                <b-row v-for="review in book.reviews" v-bind:key="review.id">
                   <b-col md="2">
                     <h6>{{review.user.firstname}} {{review.user.lastname}}</h6>
-                    <div class="product-rating">
+                    <div class="book-rating">
                       <b-form-rating
                         style="padding:0px;"
                         id="rating-inline"
@@ -135,12 +135,12 @@
                 </div>
 
                 <div class="inider-review-other-not-available" else>
-                 <h6>No reviews yet! Be the first to review this product.</h6>
+                 <h6>No reviews yet! Be the first to review this book.</h6>
                 </div>
                 <hr />
                 <b-row class="mt-3">
                   <b-col md="2">
-                    <div class="product-rating">
+                    <div class="book-rating">
                       <b-form-rating
                         style="padding:0px;"
                         id="rating-inline"
@@ -177,12 +177,12 @@
 
     <b-row>
       <b-col>
-        <div class="related-product-panel">
+        <div class="related-book-panel">
           <h5>You May Also Like</h5>
-          <div class="related-product-container">
-            <product :products="products.data"></product>
+          <div class="related-book-container">
+            <book :books="books.data"></book>
           </div>
-          <div class="related-product-panel-insider">
+          <div class="related-book-panel-insider">
             <b-button> <b-icon icon="arrow-down"></b-icon>Load More </b-button>
           </div>
         </div>
@@ -192,12 +192,12 @@
 </template>
 <script>
 import ImageZoom from "../components/ImageZoom";
-import Product from "../components/Product";
+import Book from "../components/Book";
 import { mapGetters } from "vuex";
 export default {
   components: {
     ImageZoom,
-    Product,
+    Book,
   },
 
   data() {
@@ -210,11 +210,11 @@ export default {
         rating:"5",
       },
       avg_rating:'1',
-      product: {}, //load the product with the slug query and store in single object for this page details
-      product_slug: "", //to store product slug form the url
-      products: [], //for loding more products content on product details page
+      book: {}, //load the book with the slug query and store in single object for this page details
+      book_slug: "", //to store book slug form the url
+      books: [], //for loding more books content on book details page
 
-      render_product_block: true,
+      render_book_block: true,
     };
   },
   created() {
@@ -250,15 +250,15 @@ export default {
 
   computed: {
     ...mapGetters({
-      // products: "cart/getProducts"
+      // books: "cart/getBooks"
     }),
   },
   methods: {
     getIdFromUrl() {
       this.scrollToTop(); //take page to top
-      this.product_slug = this.$route.params.slug; //get product slug from the url.
-      this.loadProduct(this.product_slug); //load the product as per the slug
-      this.relatedProducts(); //load other related project for the page.
+      this.book_slug = this.$route.params.slug; //get book slug from the url.
+      this.loadBook(this.book_slug); //load the book as per the slug
+      this.relatedBooks(); //load other related project for the page.
     },
     makeReview(){
       this.$Progress.start();
@@ -266,10 +266,10 @@ export default {
       formData.append('title',this.my_review.title);
       formData.append('rating',this.my_review.rating);
       formData.append('body',this.my_review.body);
-      formData.append('product_id',this.product.id);
+      formData.append('book_id',this.book.id);
       formData.append('_METHOD',"POST");
 
-      this.$http.post('https://eshop.test/api/review',formData)
+      this.$http.post('https://eshop.test/api/frontend/review',formData)
       .then((response)=>{
 
            this.$toast.success(response.data.msg, {
@@ -291,9 +291,9 @@ export default {
 
 
     },
-    addToCart(productId, name, price, img) {
+    addToCart(bookId, name, price, img) {
       let payload = {
-        productId: productId,
+        bookId: bookId,
         quantity: 1,
         name: name,
         price: price,
@@ -304,12 +304,12 @@ export default {
       // // or direct send payload and its key like below
       //   this.$store.commit({
       //     type: 'pushCart',
-      //     productId:productId,
+      //     bookId:bookId,
       //     quantity: 1,
       //     });
 
       // instead using dispatch for actions
-      this.$store.dispatch("cart/addProductToCart", payload)
+      this.$store.dispatch("cart/addBookToCart", payload)
       .then((response)=>{
           this.$toast.success(response, {
             timeout: 4000,
@@ -322,22 +322,22 @@ export default {
           });
       })
     },
-    productDetailParent(value) {
-      this.loadProduct(value);
+    bookDetailParent(value) {
+      this.loadBook(value);
     },
     scrollToTop() {
       window.scrollTo(0, 0);
     },
-    loadProduct(product_slug) {
+    loadBook(book_slug) {
       this.$Progress.start();
       this.$http
-        .get("https://eshop.test/api/productDFS/" + product_slug)
+        .get("https://eshop.test/api/frontend/bookDFS/" + book_slug)
         .then((response) => {
-          this.product = response.data.data[0];
+          this.book = response.data.data[0];
           // this.reviews=response.data.data[0].reviews;
           // console.log(response.data.data[0]);
 
-          this.imageZoomed = this.product.image[0];
+          this.imageZoomed = this.book.image[0];
 
           this.$Progress.finish();
         })
@@ -346,15 +346,15 @@ export default {
           this.$Progress.fail();
         });
     },
-    relatedProducts(url) {
-      //load other project except the current product
+    relatedBooks(url) {
+      //load other project except the current book
       //so pass the current project slug to ovoid it in backend
       let url_link =
-        url || "https://eshop.test/api/relatedProducts/" + this.product_slug;
+        url || "https://eshop.test/api/frontend/relatedBooks/" + this.book_slug;
       this.$http
         .get(url_link)
         .then((response) => {
-          this.products = response.data;
+          this.books = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -377,7 +377,7 @@ export default {
 </script>
 
 <style scoped>
-.product-details-inside-container {
+.book-details-inside-container {
   border: 1px solid #eeeeeea8;
   padding: 1em;
 }
@@ -385,45 +385,45 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.product-highligts-info {
+.book-highligts-info {
   color: #607d8b;
 }
-.product-detail-section-first {
+.book-detail-section-first {
   padding: 14px;
   /* box-shadow: 1px 3px 8px 9px #eee; */
 }
-.product-details-section-second {
+.book-details-section-second {
   padding: 14px;
   /* box-shadow: 1px 3px 8px 9px #eee; */
   margin-top: 1.5em;
 }
 
-.related-product-panel {
+.related-book-panel {
   margin-top: 1.5em;
   /* padding: 14px; */
   /* box-shadow: 1px 3px 8px 9px #eee; */
 }
-.related-product-panel h5 {
+.related-book-panel h5 {
   padding-bottom: 5px;
   /* margin: 0.5em; */
   color: #dc143c;
 }
-.product-details-section-second h5 {
+.book-details-section-second h5 {
   border-bottom: 1px solid #eee;
   padding-bottom: 5px;
   /* margin: 0.5em; */
 }
 
-.related-product-panel-insider {
+.related-book-panel-insider {
   display: flex;
   justify-content: center;
 }
-.related-product-panel-insider button {
+.related-book-panel-insider button {
   background: #dc143c;
   color: white;
   border: 1px solid #dc143c;
 }
-.related-product-panel button:hover {
+.related-book-panel button:hover {
   background: none;
   border: 1px solid #dc143c;
   color: #dc143c;
@@ -456,20 +456,20 @@ export default {
   cursor: pointer;
   height: 3.6em;
 }
-.product-image-panel .card-body {
+.book-image-panel .card-body {
   padding: 0px;
 }
-.product-detail-section-first {
+.book-detail-section-first {
   position: relative;
 }
-.product-detail-section-first .zoom-panel {
+.book-detail-section-first .zoom-panel {
   position: absolute;
   left: 100%;
   top: 10%;
   z-index: 1;
   background: #eee;
 }
-.product-image-panel {
+.book-image-panel {
   /* width:fit-content; */
   height: auto;
 }
@@ -518,7 +518,7 @@ export default {
   border: 1px solid #e5737361;
   background-color: #e53935;
 }
-.related-product-container {
+.related-book-container {
   display: flex;
   justify-content: center;
 }

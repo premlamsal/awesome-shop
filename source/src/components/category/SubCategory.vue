@@ -2,7 +2,7 @@
   <div class="container">
       <div class="row-custom">
           <div class="column-custom" v-for="child in childs" :key="child.id">
-          <h3>{{child.name}}</h3>
+          <h3 @click="fromCatMenu(child.slug)" style="cursor: pointer;">{{child.name}}</h3>
           <div class="more-child" v-if="child.childs.length>0">
             <div class="more-child-items" v-for="grandchild in child.childs" :key="grandchild.id">
             <a href="javascript:" @click="fromCatMenu(grandchild.slug)">{{grandchild.name}}</a>
@@ -42,7 +42,7 @@ color:#636b6f;
   color:#DC143C
 }
 .more-child-items a{
-color:yellow;
+color:black;
 }
 .more-child-items a:hover{
   color:red;

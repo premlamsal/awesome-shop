@@ -253,7 +253,7 @@ export default {
   methods: {
     getUser() {
       this.$http
-        .get("https://eshop.test/api/getUser")
+        .get("https://eshop.test/api/frontend/getUser")
         .then((response) => {
           const user_data = response.data.data[0];
           this.user.firstname = user_data.firstname;
@@ -287,12 +287,23 @@ export default {
       formData.append("details_city",this.user.details.city);
       formData.append("details_created_at",this.user.details.created_at);
       formData.append("details_updated_at",this.user.details.updated_at);
-      formData.append("file",this.uploadedFile);
+      
+      if(this.uploadedFile!=null){
+        formData.append("file",this.uploadedFile);
+      }
 
       this.$http
-        .post("https://eshop.test/api/updateUser",formData)
+        .post("https://eshop.test/api/frontend/updateUser",formData)
         .then((response) => {
           this.user = response.data.data[0];
+
+           this.$toast.success("Successfully Update Data.", {
+                timeout: 2000
+            });
+
+
+           this.uploadedFile=null;
+
         })
         .catch((error) => {
           if (error.response.status === 422) {

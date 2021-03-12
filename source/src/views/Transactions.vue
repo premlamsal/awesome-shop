@@ -136,7 +136,7 @@ export default {
       this.$Progress.start();
 
       this.$http
-        .get("https://eshop.test/api/getUserTransaction")
+        .get("https://eshop.test/api/frontend/getUserTransaction")
         .then((response) => {
           this.user = response.data.data[0];
           this.$Progress.finish();
@@ -151,7 +151,7 @@ export default {
   checkIfWithDrawRequested(){
       this.$Progress.start();
 
-    this.$http.get('https://eshop.test/api/checkIfWithDrawRequested')
+    this.$http.get('https://eshop.test/api/frontend/checkIfWithDrawRequested')
     .then((response)=>{
       // console.log(response.data);
       this.messages=response.data.msg;
@@ -176,7 +176,7 @@ export default {
 
       this.$bvModal.hide('bv-modal-withdraw')
       this.$http
-      .post("https://eshop.test/api/withDrawRequest",this.withdraw)
+      .post("https://eshop.test/api/frontend/withDrawRequest",this.withdraw)
       .then((response)=>{
         console.log(response);
       this.$Progress.finish();

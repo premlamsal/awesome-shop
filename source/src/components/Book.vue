@@ -1,27 +1,27 @@
 <template>
-  <div class="self-product-container">
-    <div class="product-card" v-for="product in products" :key="product.id">
-      <div class="product-image-outer-wrapper">
-        <div class="product-image-frame">
-          <img :src="product.image[0]" :alt="product.name" />
+  <div class="self-book-container">
+    <div class="book-card" v-for="book in books" :key="book.id">
+      <div class="book-image-outer-wrapper">
+        <div class="book-image-frame">
+          <img :src="book.image[0]" :alt="book.name" />
         </div>
       </div>
       
      
-      <h6 class="product-title">{{product.name}}</h6>
-      <div v-if="product.discount!=0">
-       <p class="product-price"><s>$ {{product.price}}</s></p>
-       <p class="product-offer-price" style="color:red">$ {{product.price - product.discount}}</p>
+      <h6 class="book-title">{{book.name}}</h6>
+      <div v-if="book.discount!=0">
+       <p class="book-price"><s>$ {{book.price}}</s></p>
+       <p class="book-offer-price" style="color:red">$ {{book.price - book.discount}}</p>
       </div>
       <div v-else>
-      <p class="product-price" style="color:red">$ {{product.price}}</p>
+      <p class="book-price" style="color:red">$ {{book.price}}</p>
      </div>
       <!-- <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum.</p> -->
       <p style="text-align:center">
-        <b-button @click="addToCart(product.id,product.name,product.price,product.image[0])">
+        <b-button @click="addToCart(book.id,book.name,book.price - book.discount ,book.image[0])">
           <b-icon icon="cart" font-scale="1.5"></b-icon>
         </b-button>
-        <b-button @click="productDetail(product.slug)">
+        <b-button @click="bookDetail(book.slug)">
           <b-icon icon="list" font-scale="1.5"></b-icon>
         </b-button>
       </p>
@@ -30,45 +30,45 @@
 </template>
 <script>
 export default {
-  name: "Product",
+  name: "Book",
   props: {
-    products: Array
+    books: Array
   },
   components: {},
   
   methods: {
   
-    productDetail(slug){
+    bookDetail(slug){
       // //add this for redundant error navigation ----  catch(() => {})
-      this.$router.push({ name: 'Product', params: { slug: slug}})
+      this.$router.push({ name: 'Book', params: { slug: slug}})
       //  this.$router.push({ 
 
-      //   path: 'product',
-      //   params: {id:productName}
+      //   path: 'book',
+      //   params: {id:bookName}
 
       // }).catch(() => {});
-       // this.$router.push({ name:'Product',params: {productName:productName
+       // this.$router.push({ name:'Book',params: {bookName:bookName
        // }});
 
 
-        // this.$router.push({ path: `/product/${productName}` });
+        // this.$router.push({ path: `/book/${bookName}` });
        
-        // this.$emit('product-detail-parent', productName);
+        // this.$emit('book-detail-parent', bookName);
 
     },
-    addToCart(productId,name,price,img) {
-      let payload = { productId: productId, quantity: 1,name:name,price:price,img:img};
+    addToCart(bookId,name,price,discount,img) {
+      let payload = { bookId: bookId, quantity: 1,name:name,price:price, img:img};
       // this.$store.commit('pushCart', payload);
 
       // // or direct send payload and its key like below
       //   this.$store.commit({
       //     type: 'pushCart',
-      //     productId:productId,
+      //     bookId:bookId,
       //     quantity: 1,
       //     });
 
       // instead using dispatch for actions
-      this.$store.dispatch("cart/addProductToCart", payload)
+      this.$store.dispatch("cart/addBookToCart", payload)
       .then((response)=>{
           this.$toast.success(response, {
             timeout: 4000,
@@ -81,15 +81,15 @@ export default {
           });
       })
     },
-    removeFromCart(productId) {
-      this.$store.dispatch("cart/removeProductFromCart", productId);
+    removeFromCart(bookId) {
+      this.$store.dispatch("cart/removeBookFromCart", bookId);
     }
   }
 };
 </script>
 <style scoped>
 
-.product-card {
+.book-card {
   box-shadow: 1px 2px 5px 0 rgb(220,20,60,0.28);
   max-width: 13em;
   text-align: center;
@@ -100,10 +100,10 @@ export default {
   background: #fff;
   /* height: 25em; */
 }
-.product-card:hover {
+.book-card:hover {
   box-shadow: 1px 5px 15px 0 rgb(220,20,60,0.28);
 }
-.product-card img {
+.book-card img {
   /* height: 14em; */
   /* width: 100%; */
   max-width: 100%;
@@ -111,18 +111,18 @@ export default {
   display: block;
   margin: 0 auto;
 }
-.product-card h6 {
+.book-card h6 {
   margin: 0.5em;
   height: 40px;
   overflow: hidden;
 }
-.product-card p {
+.book-card p {
   margin: 0.5em;
 }
-.product-img-holder {
+.book-img-holder {
   height: 240px;
 }
-.product-price {
+.book-price {
   color: grey;
   font-size: 22px;
 }
@@ -131,7 +131,7 @@ export default {
   justify-content: center;
 }
 
-.product-card button {
+.book-card button {
   border: 1px solid #DC143C61;
   outline: 0;
   padding: 10px;
@@ -144,17 +144,17 @@ export default {
   font-size: 18px;
 }
 
-.product-card button:hover {
+.book-card button:hover {
   opacity: 0.9;
   color: white;
   border: 1px solid #DC143C61;
   background-color: #DC143C;
 }
-.product-image-outer-wrapper {
+.book-image-outer-wrapper {
   display: inline-block;
   margin: 20px;
 }
-.product-image-frame {
+.book-image-frame {
   width: 250px;
   height: 200px;
   /* border: 1px solid #eee; */
@@ -165,10 +165,10 @@ export default {
 .cart-container ul {
   list-style: none;
 }
-.product-price {
+.book-price {
   font-size: 16px;
 }
-.product-slide-btn {
+.book-slide-btn {
   display: flex;
   align-items: center;
 }

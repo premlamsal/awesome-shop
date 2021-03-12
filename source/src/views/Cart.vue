@@ -26,31 +26,31 @@
                 <b-row>
                   <b-col md="4">
                     <b-row>
-                      <b-col md="3">
+                      <b-col md="4">
                         <div class="cart-img-box">
-                          <img :src="cart.productImage" class="cart-item-img" />
+                          <img :src="cart.bookImage" class="cart-item-img" />
                         </div>
                       </b-col>
-                      <b-col md="5">
+                      <b-col md="4">
                         <div>
-                          <h6>{{cart.productName}}</h6>
-                          <span style="color:#607D8B">$ {{cart.productPrice}}</span>
+                          <h6>{{cart.bookName}}</h6>
+                          <span style="color:#ff0000">$ {{cart.bookPrice}}</span>
                         </div>
                       </b-col>
                     </b-row>
                   </b-col>
-                  <b-col md="2">{{cart.productQuantity}}</b-col>
-                  <b-col md="2">$ {{cart.productLineTotal}}</b-col>
+                  <b-col md="2">{{cart.bookQuantity}}</b-col>
+                  <b-col md="2">$ {{cart.bookLineTotal}}</b-col>
                   <b-col md="2">
-                    <b-button @click="incrementTheCart(cart.productId)" variant="default">
+                    <b-button @click="incrementTheCart(cart.bookId)" variant="default">
                       <b-icon icon="plus-circle"></b-icon>
                     </b-button>
-                    <b-button @click="decrementTheCart(cart.productId)" variant="default">
+                    <b-button @click="decrementTheCart(cart.bookId)" variant="default">
                       <b-icon icon="dash-circle"></b-icon>
                     </b-button>
                   </b-col>
                   <b-col md="2">
-                    <b-button @click="removeProductFromCart(cart.productId)" variant="default">
+                    <b-button @click="removeBookFromCart(cart.bookId)" variant="default">
                       <b-icon icon="x-circle" style="color:#f44336"></b-icon>
                     </b-button>
                   </b-col>
@@ -94,11 +94,11 @@ export default {
     })
   },
   methods: {
-    decrementTheCart(productId) {
-      this.$store.dispatch("cart/decrementTheCart", productId);
+    decrementTheCart(bookId) {
+      this.$store.dispatch("cart/decrementTheCart", bookId);
     },
-    incrementTheCart(productId) {
-      this.$store.dispatch("cart/incrementTheCart", productId)
+    incrementTheCart(bookId) {
+      this.$store.dispatch("cart/incrementTheCart", bookId)
       .then((response)=>{
           this.$toast.success(response, {
             timeout: 4000,
@@ -111,8 +111,8 @@ export default {
           });
       })
     },
-    removeProductFromCart(productId) {
-      this.$store.dispatch("cart/removeProductFromCart", productId);
+    removeBookFromCart(bookId) {
+      this.$store.dispatch("cart/removeBookFromCart", bookId);
     },
     goToCheckout(){
        this.$router.push({ path: `/checkout` });
