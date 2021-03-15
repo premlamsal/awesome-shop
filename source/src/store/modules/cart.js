@@ -64,6 +64,9 @@ const mutations = {
     });
     state.cart.splice(state.cart.indexOf(cart), 1);
   },
+  clearCart(state) {
+    state.cart=[];
+  },
 };
 
 const actions = {

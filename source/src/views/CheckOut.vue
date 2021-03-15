@@ -155,38 +155,27 @@ export default {
       this.$http.post('https://eshop.test/api/frontend/verify/khalti',formData)
       .then((response)=>{
 
-        console.log(response);
+        // console.log(response);
+
+          //clearing the cart after puchase success 
+          this.$store.commit("cart/clearCart");//commit will triger mutation
+          //now cart item moved to order lists;
+          
+          this.$toast.success(response.data.msg,{
+            timeout: 7000
+          });
 
       })
       .catch((response)=>{
 
-        console.log(response);
+        // console.log(response);
+          this.$toast.error(response.data.msg,{
+            timeout: 7000
+          });
       });
 
 
     },
-    verifyEsewa(){
-
-      //  // console.log('hello from khalti');
-      // let formData =  new formData();
-      // formData.append('khalti_payload',payload);
-      // formData.append('cart',getCartItems);
-      // formData.append('_METHOD','POST');
-      
-      // this.$http.post('https://eshop.tes/api/frontend/verify/esewa',formData)
-      // .then((response)=>{
-
-      //   console.log(response);
-
-      // })
-      // .catch((response)=>{
-
-      //   console.log(response);
-      // });
-
-
-    },
-
 
     callBackForCartCheck(){
 
@@ -197,11 +186,11 @@ export default {
 
           this.khaltiConfig.amount = (response.data.amount) * 100; //converting rs to paisa for khalti
 
-          // this.khaltiConfig.productIdentity = response.data.books_id; 
+          this.khaltiConfig.productIdentity = response.data.books_id; 
 
-          // this.khaltiConfig.productName = response.data.books_id; 
+          this.khaltiConfig.productName = 'productName'+ response.data.books_id; 
 
-          // this.khaltiConfig.productUrl = response.data.books_id; 
+          this.khaltiConfig.productUrl = 'http://eshop.test/'+response.data.books_id; 
 
           this.esewa_params.amt = response.data.amount; //amount for esewa
 

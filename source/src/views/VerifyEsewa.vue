@@ -37,10 +37,8 @@ export default {
     }),
   },
   created() {
-
     this.initEsewaUrlParams();
     this.VerifyEsewa();
-
   },
   methods: {
 
@@ -51,22 +49,21 @@ export default {
       this.esewa.refId = this.$route.query.refId
     },
 
-    VerifyEsewa() {
+    VerifyEsewa(){
       this.isLoading = true;
-
       let formData = new FormData();
       formData.append("esewa", JSON.stringify(this.esewa));
       formData.append("cart", JSON.stringify(this.getCartItems));
-
       this.$http.post('https://eshop.test/api/frontend/verify/esewa', formData)
-        .then((response) => {
-
-          // console.log(response.data.msg);
-          this.$toast.success(response.data.msg, {
+        .then((response)=>{
+          console.log(response);
+          this.$toast.success(response.data.msg,{
             timeout: 7000
           });
           this.isLoading = false;
-
+          //clearing the cart after puchase success 
+          this.$store.commit("cart/clearCart");//commit will triger mutation
+          //now cart item moved to order lists;
         })
         .catch((error) => {
 
