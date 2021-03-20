@@ -4,7 +4,7 @@
         <div class="col-md-3 col-sm-6"  v-for="book in books" :key="book.id">
             <div class="product-grid">
                 <div class="product-image">
-                    <a href="#" class="image">
+                    <a href="javascript:void" @click="bookDetail(book.slug)" class="image">
                         <img class="pic-1" :src="book.image[0]" :alt="book.name">
                         <img class="pic-2" :src="book.image[1]" :alt="book.name">
                     </a>

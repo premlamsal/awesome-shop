@@ -40,7 +40,7 @@ watch: {
      '$route.params': {
         handler: async function() {
           await this.initEsewaUrlParams();
-          // this.VerifyEsewa();
+          this.VerifyEsewa();
         },
         deep: true,
         immediate: true
@@ -48,7 +48,7 @@ watch: {
 },
 async mounted(){
      await this.initEsewaUrlParams();
-     this.VerifyEsewa();
+     // this.VerifyEsewa();
 },
 methods: {
      async initEsewaUrlParams() {
