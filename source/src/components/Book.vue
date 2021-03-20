@@ -27,10 +27,12 @@
                 <div class="product-content">
                     <h3 class="title"><a href="#">{{book.name}}</a></h3>
                     <div v-if="book.discount!=0">
-                     <div class="price">${{book.price}} </div>
+                     <div class="price"><span>Rs. {{book.price}}</span>Rs.{{book.price - book.discount}}</div>
+
                     </div>
                   <div v-else>
-                     <div class="price"><span>${{book.price}}</span>$$ {{book.price - book.discount}}</div>
+                     <div class="price">Rs. {{book.price}} </div>
+
                     </div>
                 </div>
             </div>
