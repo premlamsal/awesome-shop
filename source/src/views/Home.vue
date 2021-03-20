@@ -2,11 +2,7 @@
   <div>
    
     <b-container>
- <!-- <div class="loader-panel" v-if="books.data!=null && sliders!=null && categories!=null">
-    <div class="d-flex justify-content-center mb-3" >
-        <b-spinner style="width: 3rem; height: 3rem;" label="Loading" variant="danger"></b-spinner>
-      </div>
-    </div> -->
+
       <div class="cat-slider-box">
         <b-row>
           <b-col cols="12">
@@ -70,6 +66,8 @@
           <div></div>
         </b-col>
       </b-row>
+
+
     </b-container>
   </div>
 </template>

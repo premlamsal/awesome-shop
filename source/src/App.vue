@@ -50,7 +50,7 @@ export default {
 
 body {
   margin: 0;
-  background: #f2f2f2!important;
+  background: #fff!important;
  
 }
 .custom-container {

@@ -1,36 +1,42 @@
 <template>
-  <div class="self-book-container">
-    <div class="book-card" v-for="book in books" :key="book.id">
-      
-      <a href="javascript:0" @click="bookDetail(book.slug)">
-      <div class="book-image-outer-wrapper">
-        <div class="book-image-frame">
-          <img :src="book.image[0]" :alt="book.name" />
+ <div>
+      <div class="row">
+        <div class="col-md-3 col-sm-6"  v-for="book in books" :key="book.id">
+            <div class="product-grid">
+                <div class="product-image">
+                    <a href="#" class="image">
+                        <img class="pic-1" :src="book.image[0]" :alt="book.name">
+                        <img class="pic-2" :src="book.image[1]" :alt="book.name">
+                    </a>
+                     <span class="product-sale-label" v-if="book.discount!=0">Sale!</span>
+                    <ul class="social">
+                        <li><a href="javascript:void" @click="bookDetail(book.slug)" data-tip="Quick View"><b-icon icon="eye"></b-icon></a></li>
+                        <li><a href="javascript:void" data-tip="Add to wishlist"><b-icon icon="heart"></b-icon></a></li>
+                    </ul>
+                    <div class="product-rating">
+                        <ul class="rating">
+                          <li><b-icon icon="star"></b-icon></li>
+                          <li><b-icon icon="star"></b-icon></li>
+                          <li><b-icon icon="star"></b-icon></li>
+                          <li><b-icon icon="star"></b-icon></li>
+                          <li><b-icon icon="star"></b-icon></li>
+                        </ul>
+                        <a class="add-to-cart" href="#"> ADD TO CART </a>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3 class="title"><a href="#">{{book.name}}</a></h3>
+                    <div v-if="book.discount!=0">
+                     <div class="price">${{book.price}} </div>
+                    </div>
+                  <div v-else>
+                     <div class="price"><span>${{book.price}}</span>$$ {{book.price - book.discount}}</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      
-     
-      <h6 class="book-title">{{book.name}}</h6>
-      <div v-if="book.discount!=0">
-       <p class="book-price"><s>$ {{book.price}}</s></p>
-       <p class="book-offer-price" style="color:red">$ {{book.price - book.discount}}</p>
-      </div>
-      <div v-else>
-      <p class="book-price" style="color:red">$ {{book.price}}</p>
-     </div>
-      <!-- <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum.</p> -->
-     <!--  <p style="text-align:center">
-        <b-button @click="addToCart(book.id,book.name,book.price,book.discount ,book.image[0])">
-          <b-icon icon="cart" font-scale="1.5"></b-icon>
-        </b-button>
-        <b-button @click="bookDetail(book.slug)">
-          <b-icon icon="list" font-scale="1.5"></b-icon>
-        </b-button>
-      </p> -->
-    </a>
-
-
-    </div>
+       
+</div>
   </div>
 </template>
 <script>
@@ -93,92 +99,146 @@ export default {
 };
 </script>
 <style scoped>
-
-.book-card {
-  box-shadow: 1px 2px 5px 0 rgb(220,20,60,0.28);
-  max-width: 13em;
-  text-align: center;
-  display: inline-block;
-  margin-right: 0.8em;
-  margin-bottom:0.8em;
-  /* padding: 0.5em; */
-  background: #fff;
-  /* height: 25em; */
+.product-grid{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    transition: all 0.5s;
 }
-.book-card:hover {
-  box-shadow: 1px 5px 15px 0 rgb(220,20,60,0.28);
+.product-grid:hover{ box-shadow: 0 5px 18px rgba(0, 0, 0, 0.3); }
+.product-grid .product-image{
+    position: relative;
+    overflow: hidden;
 }
-.book-card a{
-  text-decoration: none;
-  color: black;
+.product-grid .product-image a.image{ display: block; }
+.product-grid .product-image img{
+    width: 100%;
+    height: auto;
 }
-.book-card img {
-  /* height: 14em; */
-  /* width: 100%; */
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  margin: 0 auto;
+.product-image .pic-1{
+    opacity: 1;
+    backface-visibility: hidden;
+    transition: all 0.5s;
 }
-.book-card h6 {
-  margin: 0.5em;
-  height: 40px;
-  overflow: hidden;
+.product-grid:hover .product-image .pic-1{ opacity: 0; }
+.product-image .pic-2{
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.5s;
 }
-.book-card p {
-  margin: 0.5em;
+.product-grid:hover .product-image .pic-2{ opacity: 1; }
+.product-grid .product-sale-label{
+    color: #fff;
+    background: #6da84a;
+    font-size: 14px;
+    font-style: italic;
+    text-transform: uppercase;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 50px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
-.book-img-holder {
-  height: 240px;
+.product-grid .social{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: absolute;
+    top: 15px;
+    right: 7px;
 }
-.book-price {
-  color: grey;
-  font-size: 22px;
+.product-grid .social li{
+    transform: translateX(60px);
+    transition: all 0.3s ease 0.3s;
 }
-.inner-btn {
-  display: flex;
-  justify-content: center;
+.product-grid .social li:nth-child(2){ transition: all 0.3s ease 0.4s; }
+.product-grid:hover .social li{ transform: translateX(0); }
+.product-grid .social li a{
+    color: #707070;
+    background: #fff;
+    font-size: 16px;
+    line-height: 40px;
+    width: 40px;
+    height: 40px;
+    margin: 0 0 7px;
+    border-radius: 50px;
+    display: block;
+    transition: all 0.3s ease 0s;
 }
-
-.book-card button {
-  border: 1px solid #DC143C61;
-  outline: 0;
-  padding: 10px;
-  color: #DC143C;
-  background-color: #DC143C00;
-  text-align: center;
-  cursor: pointer;
-  width: 40%;
-  margin: 3px;
-  font-size: 18px;
+.product-grid .social li a:hover{ color: #6DA84A; }
+.product-grid .product-rating {
+    background: rgba(255,255,255,0.95);
+    width: 100%;
+    padding: 10px;
+    opacity: 0;
+    position: absolute;
+    bottom: -60px;
+    left: 0;
+    transition: all .2s ease-in-out 0s;
 }
-
-.book-card button:hover {
-  opacity: 0.9;
-  color: white;
-  border: 1px solid #DC143C61;
-  background-color: #DC143C;
+.product-grid:hover .product-rating{
+    opacity: 1;
+    bottom: 0;
 }
-.book-image-outer-wrapper {
-  display: inline-block;
-  margin: 20px;
+.product-grid ul.rating {
+margin: 0;
+padding: 0;
 }
-.book-image-frame {
-  width: 250px;
-  height: 200px;
-  /* border: 1px solid #eee; */
-  vertical-align: middle;
-  text-align: center;
-  display: table-cell;
+.product-grid .rating li{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    float: left;
 }
-.cart-container ul {
-  list-style: none;
+.product-grid .rating li{
+    color: #6DA84A;
+    font-size: 13px;
 }
-.book-price {
-  font-size: 16px;
+.product-grid .rating li.far{ color: #999; }
+.product-grid .add-to-cart{
+    color: #6DA84A;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #6DA84A;
+    float:right;
+    transition: all .2s ease-in-out 0s;
 }
-.book-slide-btn {
-  display: flex;
-  align-items: center;
+.product-grid .add-to-cart:hover{
+    color: #000;
+    border-color: #000;
+}
+.product-grid .product-content{
+    background: #F5F5F5;
+    padding: 15px;
+}
+.product-grid .title{
+    font-size: 18px;
+    text-transform: capitalize;
+    margin: 0 0 5px;
+}
+.product-grid .title a{
+    color: #111;
+    transition: all 500ms;
+}
+.product-grid .title a:hover{ color: #6DA84A; }
+.product-grid .price{
+    color: #707070;
+    font-size: 17px;
+    text-decoration: underline;
+}
+.product-grid .price span{
+    text-decoration: line-through;
+    margin-right: 5px;
+    display: inline-block;
+    opacity: 0.6;
+}
+@media only screen and (max-width:990px){
+    .product-grid{ margin-bottom: 40px; }
 }
 </style>
