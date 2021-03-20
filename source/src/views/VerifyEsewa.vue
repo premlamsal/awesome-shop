@@ -36,20 +36,36 @@ export default {
       getCartItems: "cart/getCartItems",
     }),
   },
-  created() {
-    this.initEsewaUrlParams();
-    this.VerifyEsewa();
-  },
-  methods: {
-
-
-    initEsewaUrlParams() {
+watch: { 
+     '$route.params': {
+        handler: async function() {
+          await this.initEsewaUrlParams();
+          // this.VerifyEsewa();
+        },
+        deep: true,
+        immediate: true
+      }
+},
+async mounted(){
+     await this.initEsewaUrlParams();
+     this.VerifyEsewa();
+},
+methods: {
+     async initEsewaUrlParams() {
       this.esewa.oid = this.$route.query.oid;
       this.esewa.amt = this.$route.query.amt;
       this.esewa.refId = this.$route.query.refId
+     /* if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
+        return true;
+      }
+      return false;*/
     },
 
     VerifyEsewa(){
+
+     
+
+
       this.isLoading = true;
       let formData = new FormData();
       formData.append("esewa", JSON.stringify(this.esewa));
@@ -64,6 +80,10 @@ export default {
           //clearing the cart after puchase success 
           this.$store.commit("cart/clearCart");//commit will triger mutation
           //now cart item moved to order lists;
+
+           this.$router.push("/customer/myorders");
+
+
         })
         .catch((error) => {
 
@@ -77,7 +97,11 @@ export default {
         });
 
 
+
+
     }
+
+
 
 
 

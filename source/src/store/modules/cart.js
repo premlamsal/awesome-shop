@@ -27,7 +27,7 @@ const getters = {
     return state.cart.reduce(function (carry, cartItem) {
       return (
         carry +
-        parseFloat(cartItem.bookQuantity) * parseFloat(cartItem.bookPrice)
+        parseFloat(cartItem.bookQuantity) * parseFloat(cartItem.bookPrice) -parseFloat(cartItem.bookDiscount)
       );
     }, 0);
   },
@@ -45,6 +45,7 @@ const mutations = {
       bookPrice: payload.price,
       bookImage: payload.img,
       bookQuantity: payload.quantity,
+      bookDiscount: payload.discount,
       bookLineTotal: payload.price * payload.quantity,
     };
 

@@ -115,6 +115,9 @@ export default {
       this.$store.dispatch("cart/removeBookFromCart", bookId);
     },
     goToCheckout(){
+
+
+
        this.$router.push({ path: `/checkout` });
     }
   }

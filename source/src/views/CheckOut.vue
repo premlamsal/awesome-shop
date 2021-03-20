@@ -139,11 +139,48 @@ export default {
     }),
   },
   created(){
-    
 
     this.callBackForCartCheck();
+
+
+    //will check cart product is uploaded by current user 
+    // this.checkCartProduct();
+
+
   },
+   watch: { 
+     '$route.params': {
+        handler: function() {
+
+          this.callBackForCartCheck();
+        },
+        deep: true,
+        immediate: true
+      }
+},
   methods: {
+
+    // checkCartProduct(){
+    //   let formData =  new FormData();
+    //   formData.append('cart',JSON.stringify(this.getCartItems));
+    //   formData.append('_METHOD','POST');
+
+    //   this.$http.post('https://eshop.test/api/frontend/check/cart',formData)
+    //   .then((response)=>{
+
+    //     console.log(response.data);
+    //   })
+    //   .catch((error)=>{
+
+    //     console.log(error.response.data)
+        
+    //     // this.$router.push("/customer/myorders");
+    //     // throw user to cart since this failed to check
+
+    //   })
+
+
+    // },
 
     verifyKhalti(payload){
       // console.log('hello from khalti');
@@ -164,6 +201,9 @@ export default {
           this.$toast.success(response.data.msg,{
             timeout: 7000
           });
+
+           this.$router.push("/customer/myorders");
+
 
       })
       .catch((response)=>{

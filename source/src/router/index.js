@@ -102,6 +102,15 @@ const routes = [
     },
   },
 
+ {
+    path: "/customer/myorders",
+    name: "MyOrders",
+    component: () => import("../views/MyOrders.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+
   {
     path: "/category/:slug",
     name: "Category",

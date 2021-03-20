@@ -26,7 +26,7 @@
             </div>
             <!-- <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum.</p> -->
             <p style="text-align:center">
-              <b-button @click="addToCart(book.id,book.name,book.price - book.discount,book.image[0])">
+              <b-button @click="addToCart(book.id,book.name,book.price,book.discount,book.image[0])">
                 <b-icon icon="cart" font-scale="1.5"></b-icon>
               </b-button>
               <b-button @click="bookDetail(book.slug)">
@@ -55,10 +55,11 @@ export default {
     bookDetail(slug) {
       this.$router.replace({ path: `/book/${slug}` });
     },
-    addToCart(bookId,name,price,img) {
+    addToCart(bookId,name,price,discount,img) {
       let payload = {
         bookId: bookId,
         quantity: 1,
+        discount:discount,
         name: name,
         price: price,
         img: img,

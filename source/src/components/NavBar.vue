@@ -80,6 +80,12 @@
                 </router-link>
               </b-dropdown-item>
 
+               <b-dropdown-item>
+                <router-link to="/customer/myorders" class="navbar-item">
+                  <b-icon icon="minecart-loaded"></b-icon> My Orders
+                </router-link>
+              </b-dropdown-item>
+
               <b-dropdown-item @click="logout">
                 <b-icon icon="box-arrow-right"></b-icon> Log Out
               </b-dropdown-item>

@@ -1,6 +1,8 @@
 <template>
   <div class="self-book-container">
     <div class="book-card" v-for="book in books" :key="book.id">
+      
+      <a href="javascript:0" @click="bookDetail(book.slug)">
       <div class="book-image-outer-wrapper">
         <div class="book-image-frame">
           <img :src="book.image[0]" :alt="book.name" />
@@ -17,14 +19,17 @@
       <p class="book-price" style="color:red">$ {{book.price}}</p>
      </div>
       <!-- <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum.</p> -->
-      <p style="text-align:center">
-        <b-button @click="addToCart(book.id,book.name,book.price - book.discount ,book.image[0])">
+     <!--  <p style="text-align:center">
+        <b-button @click="addToCart(book.id,book.name,book.price,book.discount ,book.image[0])">
           <b-icon icon="cart" font-scale="1.5"></b-icon>
         </b-button>
         <b-button @click="bookDetail(book.slug)">
           <b-icon icon="list" font-scale="1.5"></b-icon>
         </b-button>
-      </p>
+      </p> -->
+    </a>
+
+
     </div>
   </div>
 </template>
@@ -57,7 +62,7 @@ export default {
 
     },
     addToCart(bookId,name,price,discount,img) {
-      let payload = { bookId: bookId, quantity: 1,name:name,price:price, img:img};
+      let payload = { bookId: bookId, quantity: 1,name:name,discount:discount,price:price, img:img};
       // this.$store.commit('pushCart', payload);
 
       // // or direct send payload and its key like below
@@ -102,6 +107,10 @@ export default {
 }
 .book-card:hover {
   box-shadow: 1px 5px 15px 0 rgb(220,20,60,0.28);
+}
+.book-card a{
+  text-decoration: none;
+  color: black;
 }
 .book-card img {
   /* height: 14em; */
