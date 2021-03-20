@@ -37,35 +37,36 @@ export default {
     }),
   },
 watch: { 
-     '$route.params': {
+     '$route': {
         handler: async function() {
-          await this.initEsewaUrlParams();
-          this.VerifyEsewa();
+          this.initEsewaUrlParams();
         },
         deep: true,
         immediate: true
       }
 },
-async mounted(){
-     await this.initEsewaUrlParams();
-     // this.VerifyEsewa();
+created(){
+  this.initEsewaUrlParams()
+  .then(()=>{
+     this.VerifyEsewa();
+  });
 },
 methods: {
-     async initEsewaUrlParams() {
+   async initEsewaUrlParams(){
+      return new Promise((resolve,reject)=>{
+ 
       this.esewa.oid = this.$route.query.oid;
       this.esewa.amt = this.$route.query.amt;
       this.esewa.refId = this.$route.query.refId
-     /* if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
-        return true;
+      if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
+        resolve(true);
       }
-      return false;*/
+      return reject(false);
+
+      });
     },
 
-    VerifyEsewa(){
-
-     
-
-
+    VerifyEsewa() { 
       this.isLoading = true;
       let formData = new FormData();
       formData.append("esewa", JSON.stringify(this.esewa));
@@ -99,10 +100,7 @@ methods: {
 
 
 
-    }
-
-
-
+    },
 
 
 

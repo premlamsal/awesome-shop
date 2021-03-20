@@ -27,7 +27,7 @@ const getters = {
     return state.cart.reduce(function (carry, cartItem) {
       return (
         carry +
-        parseFloat(cartItem.bookQuantity) * parseFloat(cartItem.bookPrice) -parseFloat(cartItem.bookDiscount)
+        parseFloat(cartItem.bookQuantity) * (parseFloat(cartItem.bookPrice) - parseFloat(cartItem.bookDiscount))
       );
     }, 0);
   },

@@ -13,15 +13,15 @@
 
  <div class="product-grid">
                 <div class="product-image">
-                    <a href="javascript:void" @click="bookDetail(book.slug)" class="image">
+                    <a @click="bookDetail(book.slug)" class="image">
                         <img class="pic-1" :src="book.image[0]" :alt="book.name">
                         <img class="pic-2" :src="book.image[1]" :alt="book.name">
                     </a>
 
                      <span class="product-sale-label" v-if="book.discount!=0">Sale!</span>
                     <ul class="social">
-                        <li><a href="javascript:void" @click="bookDetail(book.slug)" data-tip="Quick View"><b-icon icon="eye"></b-icon></a></li>
-                        <li><a href="javascript:void" data-tip="Add to wishlist"><b-icon icon="heart"></b-icon></a></li>
+                        <li><a @click="bookDetail(book.slug)" data-tip="Quick View"><b-icon icon="eye"></b-icon></a></li>
+                        <li><a data-tip="Add to wishlist"><b-icon icon="heart"></b-icon></a></li>
                     </ul>
                     <div class="product-rating">
                         <ul class="rating">
@@ -31,7 +31,7 @@
                           <li><b-icon icon="star"></b-icon></li>
                           <li><b-icon icon="star"></b-icon></li>
                         </ul>
-                        <a class="add-to-cart" href="#"> ADD TO CART </a>
+                        <!-- <a class="add-to-cart" href="#"> ADD TO CART </a> -->
                     </div>
                 </div>
                 <div class="product-content">
@@ -68,6 +68,7 @@ export default {
   methods: {
     bookDetail(slug) {
       this.$router.replace({ path: `/book/${slug}` });
+      // console.log(slug);
     },
     addToCart(bookId,name,price,discount,img) {
       let payload = {

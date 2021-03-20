@@ -3,7 +3,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <div class="CheckOut">
+        <div class="CheckOut" v-if="isLoading===false">
           <div class="payment-panel">
             <h5>Please choose a payment method</h5>
             <div class="pay-box-outside">
@@ -90,15 +90,18 @@ export default {
     return {
 
 
+      isLoading: true,
+
+
       //esewa params
       esewa_path: "https://uat.esewa.com.np/epay/main",
       esewa_params: {
-        amt: 100,
+        amt: 0,
         psc: 0,
         pdc: 0,
         txAmt: 0,
-        tAmt: 100,
-        product_id: "4hhj-4fgfgf",
+        tAmt: 0,
+        product_id: '',
         scd_merchant: "EPAYTEST",
         su: 'http://localhost:8080/#/verify/esewa',
         fu: 'http://localhost:8080/#/error',
@@ -218,6 +221,8 @@ export default {
     },
 
     callBackForCartCheck(){
+console.log(this.isLoading)
+      this.isLoading=true;
 
         // const cart = JSON.stringify(this.getCartItems);
 
@@ -241,33 +246,18 @@ export default {
 
 
           // console.log(response.data);
+          this.isLoading=false;
+console.log(this.isLoading)
+
          
         })
-        .catch((response)=>{
-
-            console.log(response);
+        .catch((error)=>{
+          this.isLoading=true;
+            console.log(error);
         });
   
+console.log(this.isLoading)
 
-
-    },
-
-    initVar(){
-
-        this.bookIdentity=''
-        this.bookName=''
-        this.bookUrl=''
-        this.amount=this.grandTotal;
-
-    },
-
-    initEsewaVar(){
-
-
-    },
-    initKhaltiVar(){
-
-      this.khaltiConfig.amount=this.grandTotal;
 
     },
     

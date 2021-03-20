@@ -1,5 +1,5 @@
 <template>
-  <b-container class="bg-white">
+  <b-container class="bg-white" v-if="isLoading===false">
     <div class="book-detail-section-first mt-4" v-if="render_book_block">
       <b-row>
         <b-col md="4">
@@ -180,9 +180,8 @@
       <b-col>
         <div class="related-book-panel">
           <h5>You May Also Like</h5>
-          <div class="related-book-container">
+          
             <book :books="books.data"></book>
-          </div>
           <div class="related-book-panel-insider">
             <b-button> <b-icon icon="arrow-down"></b-icon>Load More </b-button>
           </div>
@@ -203,6 +202,7 @@ export default {
 
   data() {
     return {
+      isLoading:true,
       imageZoomed: "",
       isZoomed: false,
       my_review: {
@@ -262,6 +262,7 @@ export default {
       this.relatedBooks(); //load other related project for the page.
     },
     makeReview(){
+      this.isLoading=true;
       this.$Progress.start();
       let formData = new FormData();
       formData.append('title',this.my_review.title);
@@ -280,6 +281,7 @@ export default {
         this.my_review.rating=""
         this.my_review.body=""
         this.$Progress.finish();
+        this.isLoading=false;
       })
       .catch((error)=>{
 
@@ -288,6 +290,7 @@ export default {
           });
           this
         this.$Progress.fail();
+        this.isLoading=true;
       });
 
 
@@ -331,6 +334,7 @@ export default {
       window.scrollTo(0, 0);
     },
     loadBook(book_slug) {
+      this.isLoading=true;
       this.$Progress.start();
       this.$http
         .get("https://eshop.test/api/frontend/bookDFS/" + book_slug)
@@ -342,13 +346,16 @@ export default {
           this.imageZoomed = this.book.image[0];
 
           this.$Progress.finish();
+      this.isLoading=false;
         })
         .catch((error) => {
           console.log(error);
           this.$Progress.fail();
+      this.isLoading=true;
         });
     },
     relatedBooks(url) {
+      this.isLoading=true;
       //load other project except the current book
       //so pass the current project slug to ovoid it in backend
       let url_link =
@@ -357,9 +364,11 @@ export default {
         .get(url_link)
         .then((response) => {
           this.books = response.data;
+          this.isLoading=false;
         })
         .catch((error) => {
           console.log(error);
+          this.isLoading=true;
         });
     },
     zoomImage(image) {
