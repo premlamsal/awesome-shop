@@ -36,38 +36,30 @@ export default {
       getCartItems: "cart/getCartItems",
     }),
   },
-watch: { 
-     '$route': {
-        handler: async function() {
-          this.initEsewaUrlParams();
-        },
-        deep: true,
-        immediate: true
-      }
-},
+watch: {
+    $route: function() {
+      this.initEsewaUrlParams();
+    },
+  },
 created(){
-  this.initEsewaUrlParams()
-  .then(()=>{
-     this.VerifyEsewa();
-  });
+this.initEsewaUrlParams();
+ 
 },
 methods: {
-   async initEsewaUrlParams(){
-      return new Promise((resolve,reject)=>{
- 
+    initEsewaUrlParams(){
       this.esewa.oid = this.$route.query.oid;
       this.esewa.amt = this.$route.query.amt;
       this.esewa.refId = this.$route.query.refId
       if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
-        resolve(true);
+        this.VerifyEsewa();
       }
-      return reject(false);
-
-      });
     },
 
     VerifyEsewa() { 
-      this.isLoading = true;
+      console.log('hey from verify');
+      if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
+
+          this.isLoading = true;
       let formData = new FormData();
       formData.append("esewa", JSON.stringify(this.esewa));
       formData.append("cart", JSON.stringify(this.getCartItems));
@@ -78,6 +70,9 @@ methods: {
             timeout: 7000
           });
           this.isLoading = false;
+          this.esewa.oid='';
+          this.esewa.amt='';
+          this.esewa.refId='';
           //clearing the cart after puchase success 
           this.$store.commit("cart/clearCart");//commit will triger mutation
           //now cart item moved to order lists;
@@ -98,7 +93,12 @@ methods: {
         });
 
 
+      }else{
 
+          console.log('nulled baby');
+
+      }
+    
 
     },
 

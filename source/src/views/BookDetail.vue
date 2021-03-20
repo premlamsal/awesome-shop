@@ -256,6 +256,7 @@ export default {
   },
   methods: {
     getIdFromUrl() {
+      console.log('hey from detail')
       this.scrollToTop(); //take page to top
       this.book_slug = this.$route.params.slug; //get book slug from the url.
       this.loadBook(this.book_slug); //load the book as per the slug
