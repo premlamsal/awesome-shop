@@ -145,22 +145,17 @@ export default {
 
     this.callBackForCartCheck();
 
-
     //will check cart product is uploaded by current user 
     // this.checkCartProduct();
 
 
   },
-   watch: { 
-     '$route.params': {
-        handler: function() {
 
-          this.callBackForCartCheck();
-        },
-        deep: true,
-        immediate: true
-      }
-},
+  watch: {
+    $route: function() {
+      this.callBackForCartCheck();
+    },
+  },
   methods: {
 
     // checkCartProduct(){

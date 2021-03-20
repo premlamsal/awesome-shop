@@ -323,7 +323,7 @@ export default {
       })
       .catch((error)=>{
 
-          this.$toast.error(error, {
+          this.$toast.error(error.msg, {
             timeout: 4000,
           });
       })

@@ -56,7 +56,6 @@ methods: {
     },
 
     VerifyEsewa() { 
-      console.log('hey from verify');
       if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
 
           this.isLoading = true;
