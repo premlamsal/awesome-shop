@@ -121,6 +121,7 @@ export default {
     backface-visibility: hidden;
     transition: all 0.5s;
 }
+
 .product-grid:hover .product-image .pic-1{ opacity: 0; }
 .product-image .pic-2{
     width: 100%;

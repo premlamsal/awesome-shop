@@ -54,6 +54,7 @@
                     book.id,
                     book.name,
                     book.price,
+                    book.discount,
                     book.image[0]
                   )
                 "
@@ -291,12 +292,13 @@ export default {
 
 
     },
-    addToCart(bookId, name, price, img) {
+    addToCart(bookId, name, price, discount,img) {
       let payload = {
         bookId: bookId,
         quantity: 1,
         name: name,
         price: price,
+        discount:discount,
         img: img,
       };
       // this.$store.commit('pushCart', payload);
