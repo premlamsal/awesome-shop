@@ -27,6 +27,7 @@ export default {
         refId: '',
       },
       isLoading: false,
+      isCreated:false
     };
   },
   computed: {
@@ -36,14 +37,16 @@ export default {
       getCartItems: "cart/getCartItems",
     }),
   },
-watch: {
-    $route: function() {
-      this.initEsewaUrlParams();
-    },
-  },
+// watch: {
+//     $route: function() {
+//       console.log('from watch')
+//     },
+//   },
 created(){
-this.initEsewaUrlParams();
- 
+  // console.log('created')
+   if(this.initEsewaUrlParams()){
+     this.VerifyEsewa();
+   }
 },
 methods: {
     initEsewaUrlParams(){
@@ -51,11 +54,13 @@ methods: {
       this.esewa.amt = this.$route.query.amt;
       this.esewa.refId = this.$route.query.refId
       if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
-        this.VerifyEsewa();
+            return true;
       }
+      return false;
     },
 
     VerifyEsewa() { 
+      console.log('hello');
       if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
 
           this.isLoading = true;
