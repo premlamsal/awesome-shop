@@ -41,6 +41,7 @@
                   <thead>
                     <tr>
                       <th scope="col">Book Id</th>
+                      <th scope="col">Image</th>
                       <th scope="col">Item</th>
                       <th scope="col">Quantity</th>
                       <th scope="col">Total</th>
@@ -51,6 +52,7 @@
                       <td>
                        {{order_detail.book_id}}
                       </td>
+                      <td><img :src="order_detail.image" width="80" height="100" class="img-responsive" /></td>
                       <td>{{ order_detail.name }}</td>
                       <td>{{ order_detail.quantity }}</td>
                       <td>Rs. {{ order_detail.line_total }}</td>
