@@ -74,6 +74,14 @@
                 </router-link>
               </b-dropdown-item>
 
+
+              <b-dropdown-item>
+                <router-link to="/customer/orders" class="navbar-item">
+                  <b-icon icon="arrow-left-right"></b-icon> Orders
+                </router-link>
+              </b-dropdown-item>
+
+
               <b-dropdown-item>
                 <router-link to="/customer/mybooks" class="navbar-item">
                   <b-icon icon="collection"></b-icon> My Books

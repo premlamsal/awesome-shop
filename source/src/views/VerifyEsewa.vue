@@ -22,12 +22,12 @@ export default {
   data() {
     return {
       esewa: {
-        oid: '',
-        amt: '',
-        refId: '',
+        oid: "",
+        amt: "",
+        refId: "",
       },
       isLoading: false,
-      isCreated:false
+      isCreated: false,
     };
   },
   computed: {
@@ -37,79 +37,73 @@ export default {
       getCartItems: "cart/getCartItems",
     }),
   },
-// watch: {
-//     $route: function() {
-//       console.log('from watch')
-//     },
-//   },
-created(){
-  // console.log('created')
-   if(this.initEsewaUrlParams()){
-     this.VerifyEsewa();
-   }
-},
-methods: {
-    initEsewaUrlParams(){
+  watch: {
+    $route: function() {
+      this.initEsewaUrlParams();
+    },
+  },
+  async created() {
+    // console.log('created')
+    await this.initEsewaUrlParams();
+  },
+  methods: {
+    async initEsewaUrlParams() {
       this.esewa.oid = this.$route.query.oid;
       this.esewa.amt = this.$route.query.amt;
-      this.esewa.refId = this.$route.query.refId
-      if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
-            return true;
+      this.esewa.refId = this.$route.query.refId;
+      if (
+        this.esewa.oid != "" &&
+        this.esewa.amt != "" &&
+        this.esewa.refId != ""
+      ) {
+        this.VerifyEsewa();
       }
       return false;
     },
 
-    VerifyEsewa() { 
-      console.log('hello');
-      if(this.esewa.oid!='' && this.esewa.amt!='' && this.esewa.refId!=''){
+    async VerifyEsewa() {
+      if (
+        this.esewa.oid != "" &&
+        this.esewa.amt != "" &&
+        this.esewa.refId != ""
+      ) {
+        console.log(this.esewa);
 
-          this.isLoading = true;
-      let formData = new FormData();
-      formData.append("esewa", JSON.stringify(this.esewa));
-      formData.append("cart", JSON.stringify(this.getCartItems));
-      this.$http.post('https://eshop.test/api/frontend/verify/esewa', formData)
-        .then((response)=>{
-          console.log(response);
-          this.$toast.success(response.data.msg,{
-            timeout: 7000
+        this.isLoading = true;
+        let formData = new FormData();
+        formData.append("esewa", JSON.stringify(this.esewa));
+        formData.append("cart", JSON.stringify(this.getCartItems));
+        this.$http
+          .post("https://eshop.test/api/frontend/verify/esewa", formData)
+          .then((response) => {
+            console.log(response);
+            this.$toast.success(response.data.msg, {
+              timeout: 7000,
+            });
+            this.isLoading = false;
+            this.esewa.oid = "";
+            this.esewa.amt = "";
+            this.esewa.refId = "";
+            //clearing the cart after puchase success
+            this.$store.commit("cart/clearCart"); //commit will triger mutation
+            //now cart item moved to order lists;
+
+            this.$router.push("/customer/myorders");
+          })
+          .catch((error) => {
+            // console.log(error.response.data.msg);
+
+            // this.$toast.error(error.response.data.msg, {
+            //   timeout: 7000,
+            // });
+            // this.isLoading = false;
+            console.log(error.response);
           });
-          this.isLoading = false;
-          this.esewa.oid='';
-          this.esewa.amt='';
-          this.esewa.refId='';
-          //clearing the cart after puchase success 
-          this.$store.commit("cart/clearCart");//commit will triger mutation
-          //now cart item moved to order lists;
-
-           this.$router.push("/customer/myorders");
-
-
-        })
-        .catch((error) => {
-
-          // console.log(error.response.data.msg);
-
-          this.$toast.error(error.response.data.msg, {
-            timeout: 7000
-          });
-          this.isLoading = false;
-
-        });
-
-
-      }else{
-
-          console.log('nulled baby');
-
+      } else {
+        console.log("nulled baby");
       }
-    
-
     },
-
-
-
-
-  }
+  },
 };
 </script>
 
